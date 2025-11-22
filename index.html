@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشاوره تحصیلی | احسان افشارمنش</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* فونت‌ها */
+        @font-face {
+            font-family: 'Doran';
+            src: url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/Sahel.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'Ayeh';
+            src: url('https://cdn.jsdelivr.net/gh/rastikerdar/samim-font@v4.0.5/dist/Samim.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        /* متغیرها */
+        :root {
+            --primary-color: #1877f2; /* آبی فیس‌بوک */
+            --secondary-color: #42b72a; /* سبز فیس‌بوک */
+            --accent-color: #f0f2f5; /* خاکستری روشن فیس‌بوک */
+            --text-color: #1c1e21;
+            --light-text: #65676b;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        /* استایل پایه */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Doran', sans-serif;
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Ayeh', sans-serif;
+            margin-bottom: 1rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* صفحه اصلی */
+        .main-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .profile-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--white);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+        }
+        
+        .profile-name {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .profile-title {
+            font-size: 1.2rem;
+            color: var(--light-text);
+        }
+        
+        /* باکس‌ها */
+        .boxes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .box {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .box-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .box-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        
+        .box-desc {
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+        
+        /* انیمیشن نور دور باکس */
+        .box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(45deg);
+            animation: shine 5s infinite linear;
+            z-index: 1;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+        
+        /* صفحات داخلی */
+        .inner-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            z-index: 100;
+            overflow-y: auto;
+            display: none;
+            padding: 20px;
+        }
+        
+        .inner-page.active {
+            display: block;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+        
+        /* استایل اسلایدر */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .slide-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: var(--transition);
+            z-index: 5;
+        }
+        
+        .slider-nav:hover {
+            background: var(--white);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev {
+            right: 20px;
+        }
+        
+        .next {
+            left: 20px;
+        }
+        
+        /* استایل طرح‌های مشاوره */
+        .plans-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .plan {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .plan-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .plan-list {
+            list-style: none;
+        }
+        
+        .plan-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .plan-item i {
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .fa-check {
+            color: var(--secondary-color);
+        }
+        
+        .fa-times {
+            color: #ff3333;
+        }
+        
+        /* استایل صفحات تماس */
+        .contact-options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+            margin: 40px auto;
+        }
+        
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 18px 25px;
+            border-radius: var(--border-radius);
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--white);
+        }
+        
+        .call-btn {
+            background: var(--primary-color);
+        }
+        
+        .sms-btn {
+            background: var(--secondary-color);
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-btn i {
+            font-size: 1.3rem;
+        }
+        
+        /* رسپانسیو */
+        @media (max-width: 768px) {
+            .boxes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-name {
+                font-size: 1.8rem;
+            }
+            
+            .slide-img {
+                height: 300px;
+            }
+            
+            .plans-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحه اصلی -->
+    <div class="main-page active" id="main-page">
+        <div class="profile-section">
+            <img src="https://via.placeholder.com/150" alt="احسان افشارمنش" class="profile-img">
+            <h1 class="profile-name">احسان افشارمنش</h1>
+            <p class="profile-title">مشاور تحصیلی و کنکور</p>
+        </div>
+        
+        <div class="boxes-grid">
+            <div class="box" data-target="intro-page">
+                <div class="box-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3 class="box-title">معرفی مشاور</h3>
+                <p class="box-desc">آشنایی با سوابق و خدمات مشاوره</p>
+            </div>
+            
+            <div class="box" data-target="social-page">
+                <div class="box-icon">
+                    <i class="fas fa-hashtag"></i>
+                </div>
+                <h3 class="box-title">فضای مجازی</h3>
+                <p class="box-desc">ارتباط از طریق شبکه‌های اجتماعی</p>
+            </div>
+            
+            <div class="box" data-target="appointment-page">
+                <div class="box-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h3 class="box-title">دریافت نوبت</h3>
+                <p class="box-desc">رزرو آنلاین وقت مشاوره</p>
+            </div>
+            
+            <div class="box" data-target="contact-page">
+                <div class="box-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <h3 class="box-title">تماس مستقیم</h3>
+                <p class="box-desc">رزرو وقت از طریق تماس تلفنی</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه معرفی مشاور -->
+    <div class="inner-page" id="intro-page">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <div class="container">
+            <h2>معرفی مشاور</h2>
+            <p>احسان افشارمنش، مشاور تحصیلی با بیش از ۱۰ سال سابقه در زمینه مشاوره و برنامه‌ریزی تحصیلی برای دانش‌آموزان کنکوری. تخصص اصلی ایشان در زمینه روش‌های نوین مطالعه، مدیریت زمان و افزایش بازدهی تحصیلی است.</p>
+            
+            <div class="boxes-grid" style="margin-top: 40px;">
+                <div class="box" data-target="success-page">
+                    <div class="box-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="box-title">قبولی‌های دانشگاه</h3>
+                    <p class="box-desc">نمونه کارنامه‌های قبولی</p>
+                </div>
+                
+                <div class="box" data-target="plans-page">
+                    <div class="box-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3 class="box-title">پلن‌های مشاوره‌ای</h3>
+                    <p class="box-desc">طرح‌های سالیانه الماس و طلایی</p>
+                </div>
+                
+                <div class="box" data-target="books-page">
+                    <div class="box-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="box-title">کتاب‌ها</h3>
+                    <p class="box-desc">آثار منتشر شده</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه قبولی‌ها -->
+    <div class="inner-page" id="success-page">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <div class="container">
+            <h2>قبولی‌های دانشگاه</h2>
+            <div class="slider-container">
+                <div class="slider" id="success-slider">
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x400/1877f2/ffffff?text=کارنامه+دانشجو+۱" alt="کارنامه دانشجو ۱" class="slide-img">
+                        <div class="slide-caption">
+                            <p>رضا محمدی - رتبه ۱۲ کنکور تجربی - دانشگاه تهران</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x400/42b72a/ffffff?text=کارنامه+دانشجو+۲" alt="کارنامه دانشجو ۲" class="slide-img">
+                        <div class="slide-caption">
+                            <p>سارا احمدی - رتبه ۲۳ کنکور ریاضی - دانشگاه شریف</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x400/ff6b6b/ffffff?text=کارنامه+دانشجو+۳" alt="کارنامه دانشجو ۳" class="slide-img">
+                        <div class="slide-caption">
+                            <p>محمد حسینی - رتبه ۱۸ کنکور انسانی - دانشگاه تهران</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-nav prev" onclick="prevSlide('success-slider')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="slider-nav next" onclick="nextSlide('success-slider')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه پلن‌های مشاوره -->
+    <div class="inner-page" id="plans-page">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <div class="container">
+            <h2>پلن‌های مشاوره‌ای</h2>
+            
+            <div class="plans-container">
+                <div class="plan">
+                    <h3 class="plan-title">طرح الماس</h3>
+                    <ul class="plan-list">
+                        <li class="plan-item"><i class="fas fa-check"></i> برنامه ریزی هفتگی</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> بررسی گزارشات به صورت روزانه</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> پاسخگویی آنلاین به سؤالات</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> تحلیل آزمون آزمایشی</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> بررسی روند تحصیلی به صورت نرم افزاری</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> آموزش خلاصه نویسی</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> آموزش شیوه مطالعه مؤثر</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> آموزش شیوه تست زنی</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> آموزش مدیریت زمان آزمون</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> آموزش نکته‌برداری و یادداشت برداری</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> برقراری تماس در صورت لزوم جهت مشاوره آنلاین</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> برگزاری آزمون به صورت کوئیز و تحلیل به صورت هفتگی</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> ارسال سوالات به صورت کار در منزل</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> ارسال و بررسی یک سوال از کنکور به صورت شبانه</li>
+                    </ul>
+                </div>
+                
+                <div class="plan">
+                    <h3 class="plan-title">طرح طلایی</h3>
+                    <ul class="plan-list">
+                        <li class="plan-item"><i class="fas fa-check"></i> برنامه ریزی هفتگی</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> بررسی گزارشات به صورت روزانه</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> پاسخگویی آنلاین به سؤالات</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> تحلیل آزمون آزمایشی</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> بررسی روند تحصیلی به صورت نرم افزاری</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> آموزش خلاصه نویسی</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> آموزش شیوه مطالعه مؤثر</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> آموزش شیوه تست زنی</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> آموزش مدیریت زمان آزمون</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> آموزش نکته‌برداری و یادداشت برداری</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> برقراری تماس در صورت لزوم جهت مشاوره آنلاین</li>
+                        <li class="plan-item"><i class="fas fa-times"></i> برگزاری آزمون به صورت کوئیز و تحلیل به صورت هفتگی</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> ارسال سوالات به صورت کار در منزل</li>
+                        <li class="plan-item"><i class="fas fa-check"></i> ارسال و بررسی یک سوال از کنکور به صورت شبانه</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه کتاب‌ها -->
+    <div class="inner-page" id="books-page">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <div class="container">
+            <h2>کتاب‌ها</h2>
+            <div class="slider-container">
+                <div class="slider" id="books-slider">
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x400/3498db/ffffff?text=کتاب+روش+های+مطالعه+مؤثر" alt="کتاب روش‌های مطالعه مؤثر" class="slide-img">
+                    </div>
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x400/9b59b6/ffffff?text=کتاب+مدیریت+زمان+در+کنکور" alt="کتاب مدیریت زمان در کنکور" class="slide-img">
+                    </div>
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x400/e74c3c/ffffff?text=کتاب+تکنیک‌های+تست‌زنی" alt="کتاب تکنیک‌های تست‌زنی" class="slide-img">
+                    </div>
+                </div>
+                <button class="slider-nav prev" onclick="prevSlide('books-slider')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="slider-nav next" onclick="nextSlide('books-slider')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه شبکه‌های اجتماعی -->
+    <div class="inner-page" id="social-page">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <div class="container">
+            <h2>فضای مجازی</h2>
+            <div class="slider-container">
+                <div class="slider" id="social-slider">
+                    <div class="slide">
+                        <div style="padding: 40px; text-align: center;">
+                            <i class="fab fa-instagram" style="font-size: 5rem; color: #E1306C; margin-bottom: 20px;"></i>
+                            <h3>اینستاگرام</h3>
+                            <p style="margin: 20px 0;">@ehsan_afsharmanesh</p>
+                            <a href="https://www.instagram.com/ehsan_afsharmanesh" target="_blank" class="contact-btn" style="background: #E1306C; display: inline-flex;">
+                                <i class="fab fa-instagram"></i> مشاهده صفحه
+                            </a>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div style="padding: 40px; text-align: center;">
+                            <i class="fab fa-whatsapp" style="font-size: 5rem; color: #25D366; margin-bottom: 20px;"></i>
+                            <h3>واتساپ</h3>
+                            <p style="margin: 20px 0;">09131467038</p>
+                            <a href="https://wa.me/989131467038" target="_blank" class="contact-btn" style="background: #25D366; display: inline-flex;">
+                                <i class="fab fa-whatsapp"></i> ارسال پیام
+                            </a>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div style="padding: 40px; text-align: center;">
+                            <i class="fab fa-telegram" style="font-size: 5rem; color: #0088cc; margin-bottom: 20px;"></i>
+                            <h3>تلگرام</h3>
+                            <p style="margin: 20px 0;">09131467038</p>
+                            <a href="https://t.me/09131467038" target="_blank" class="contact-btn" style="background: #0088cc; display: inline-flex;">
+                                <i class="fab fa-telegram"></i> ارسال پیام
+                            </a>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div style="padding: 40px; text-align: center;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Shad.ir_logo.svg/1200px-Shad.ir_logo.svg.png" alt="شاد" style="width: 80px; height: 80px; margin-bottom: 20px;">
+                            <h3>شاد</h3>
+                            <p style="margin: 20px 0;">اپلیکیشن شاد</p>
+                            <a href="#" class="contact-btn" style="background: #4CAF50; display: inline-flex;">
+                                <i class="fas fa-external-link-alt"></i> ورود به شاد
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-nav prev" onclick="prevSlide('social-slider')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="slider-nav next" onclick="nextSlide('social-slider')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه دریافت نوبت -->
+    <div class="inner-page" id="appointment-page">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <div class="container">
+            <h2>دریافت نوبت اینترنتی</h2>
+            <p style="text-align: center; margin: 30px 0;">برای رزرو نوبت مشاوره، لطفاً بر روی دکمه زیر کلیک کنید تا به پلتفرم رزرو نوبت هدایت شوید.</p>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://doctoreto.com/doctor/dr-ehsan-afshar-manesh/MNzpxM" target="_blank" class="contact-btn" style="background: var(--primary-color); display: inline-flex;">
+                    <i class="fas fa-calendar-check"></i> رزرو نوبت اینترنتی
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه تماس مستقیم -->
+    <div class="inner-page" id="contact-page">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <div class="container">
+            <h2>تماس مستقیم</h2>
+            <p style="text-align: center; margin: 30px 0;">برای رزرو وقت مشاوره از طریق تماس تلفنی یا ارسال پیامک، از گزینه‌های زیر استفاده کنید.</p>
+            
+            <div class="contact-options">
+                <a href="tel:09131467038" class="contact-btn call-btn">
+                    <i class="fas fa-phone-alt"></i> تماس تلفنی
+                </a>
+                
+                <a href="sms:09131467038" class="contact-btn sms-btn">
+                    <i class="fas fa-sms"></i> ارسال پیامک
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // مدیریت نمایش صفحات
+        document.querySelectorAll('.box').forEach(box => {
+            box.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                showPage(targetId);
+            });
+        });
+        
+        function showPage(pageId) {
+            // مخفی کردن همه صفحات
+            document.querySelectorAll('.inner-page, .main-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // نمایش صفحه مورد نظر
+            document.getElementById(pageId).classList.add('active');
+            
+            // ریست کردن اسلایدرها
+            resetSliders();
+        }
+        
+        function goBack() {
+            // مخفی کردن همه صفحات داخلی
+            document.querySelectorAll('.inner-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // نمایش صفحه اصلی
+            document.getElementById('main-page').classList.add('active');
+        }
+        
+        // مدیریت اسلایدرها
+        let currentSlides = {};
+        
+        function resetSliders() {
+            document.querySelectorAll('.slider').forEach(slider => {
+                currentSlides[slider.id] = 0;
+                slider.style.transform = 'translateX(0)';
+            });
+        }
+        
+        function nextSlide(sliderId) {
+            const slider = document.getElementById(sliderId);
+            const slides = slider.querySelectorAll('.slide');
+            
+            if (!currentSlides[sliderId]) currentSlides[sliderId] = 0;
+            
+            currentSlides[sliderId] = (currentSlides[sliderId] + 1) % slides.length;
+            slider.style.transform = `translateX(-${currentSlides[sliderId] * 100}%)`;
+        }
+        
+        function prevSlide(sliderId) {
+            const slider = document.getElementById(sliderId);
+            const slides = slider.querySelectorAll('.slide');
+            
+            if (!currentSlides[sliderId]) currentSlides[sliderId] = 0;
+            
+            currentSlides[sliderId] = (currentSlides[sliderId] - 1 + slides.length) % slides.length;
+            slider.style.transform = `translateX(-${currentSlides[sliderId] * 100}%)`;
+        }
+        
+        // مقداردهی اولیه
+        resetSliders();
+        
+        // انیمیشن برای اسلایدر شبکه‌های اجتماعی
+        const socialSlider = document.getElementById('social-slider');
+        if (socialSlider) {
+            setInterval(() => {
+                nextSlide('social-slider');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
