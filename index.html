@@ -5,21 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مشاوره تحصیلی | احسان افشارمنش</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         /* فونت‌ها */
-        @font-face {
-            font-family: 'Doran';
-            src: url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/Sahel.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-        
-        @font-face {
-            font-family: 'Ayeh';
-            src: url('https://cdn.jsdelivr.net/gh/rastikerdar/samim-font@v4.0.5/dist/Samim.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         
         /* متغیرها */
         :root {
@@ -42,7 +31,7 @@
         }
         
         body {
-            font-family: 'Doran', sans-serif;
+            font-family: 'Vazirmatn', sans-serif;
             background-color: var(--accent-color);
             color: var(--text-color);
             line-height: 1.6;
@@ -50,7 +39,7 @@
         }
         
         h1, h2, h3, h4 {
-            font-family: 'Ayeh', sans-serif;
+            font-family: 'Vazirmatn', sans-serif;
             margin-bottom: 1rem;
         }
         
@@ -69,33 +58,16 @@
             height: 100%;
             background: var(--white);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
         }
         
         .loading-text {
-            font-size: 2.5rem;
+            font-size: 8rem;
             font-weight: bold;
             color: var(--primary-color);
-            margin-bottom: 20px;
-            font-family: 'Ayeh', sans-serif;
-        }
-        
-        .loading-bar {
-            width: 300px;
-            height: 10px;
-            background: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        
-        .loading-progress {
-            height: 100%;
-            background: var(--primary-color);
-            width: 0%;
-            transition: width 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
         }
         
         /* صفحه اصلی */
@@ -117,7 +89,7 @@
             position: relative;
             width: 100%;
             max-width: 851px;
-            margin: 0 auto 40px;
+            margin: 0 auto 20px;
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--box-shadow);
@@ -125,7 +97,7 @@
         
         .cover-container {
             width: 100%;
-            height: 315px;
+            height: 200px;
             background-color: #e9ebee;
             overflow: hidden;
         }
@@ -139,19 +111,20 @@
         .profile-info {
             display: flex;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             background: var(--white);
+            position: relative;
         }
         
         .profile-img {
-            width: 170px;
-            height: 170px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
             border: 5px solid var(--white);
             box-shadow: var(--box-shadow);
-            margin-left: 20px;
-            margin-top: -85px;
+            margin-left: 15px;
+            margin-top: -60px;
         }
         
         .profile-text {
@@ -159,21 +132,44 @@
         }
         
         .profile-name {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: var(--primary-color);
             margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         
         .profile-title {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--light-text);
+        }
+        
+        .instagram-followers {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 10px;
+        }
+        
+        .follower-count {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .follower-text {
+            font-size: 0.7rem;
+            color: var(--text-color);
+            margin-top: 2px;
         }
         
         /* باکس‌ها */
         .boxes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+            gap: 20px;
             width: 100%;
             max-width: 900px;
             margin: 0 auto;
@@ -189,7 +185,7 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            min-height: 180px;
+            min-height: 160px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -200,49 +196,63 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
+        /* انیمیشن نور زیر باکس */
+        .box::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 20px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--primary-color),
+                transparent
+            );
+            border-radius: 50%;
+            filter: blur(10px);
+            animation: glow 2s infinite linear;
+            z-index: -1;
+        }
+        
+        @keyframes glow {
+            0% {
+                opacity: 0.3;
+                transform: translateX(-50%) scale(0.8);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translateX(-50%) scale(1.1);
+            }
+            100% {
+                opacity: 0.3;
+                transform: translateX(-50%) scale(0.8);
+            }
+        }
+        
         .box-icon {
             font-size: 2.5rem;
             color: var(--primary-color);
             margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
         }
         
         .box-title {
             font-size: 1.3rem;
             margin-bottom: 10px;
             color: var(--text-color);
+            position: relative;
+            z-index: 2;
         }
         
         .box-desc {
             color: var(--light-text);
             font-size: 0.95rem;
-        }
-        
-        /* انیمیشن نور دور باکس */
-        .box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.1) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: rotate(45deg);
-            animation: shine 5s infinite linear;
-            z-index: 1;
-        }
-        
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%) translateY(-100%) rotate(45deg);
-            }
-            100% {
-                transform: translateX(100%) translateY(100%) rotate(45deg);
-            }
+            position: relative;
+            z-index: 2;
         }
         
         /* صفحات داخلی */
@@ -286,7 +296,7 @@
             position: relative;
             width: 100%;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 0 auto 40px;
             overflow: hidden;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -302,28 +312,39 @@
             position: relative;
         }
         
-        .slide-img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
+        .slide-content {
+            padding: 40px;
+            text-align: center;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--white);
         }
         
-        .slide-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            color: var(--white);
-            padding: 15px;
-            text-align: center;
+        .slide-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .slide-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .slide-handle {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            margin-bottom: 20px;
         }
         
         .slider-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             border: none;
             width: 50px;
             height: 50px;
@@ -336,11 +357,18 @@
             color: var(--primary-color);
             transition: var(--transition);
             z-index: 5;
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         
         .slider-nav:hover {
             background: var(--white);
             transform: translateY(-50%) scale(1.1);
+            animation: none;
         }
         
         .prev {
@@ -349,6 +377,69 @@
         
         .next {
             left: 20px;
+        }
+        
+        /* شبکه‌های اجتماعی زیر اسلایدر */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .social-item {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 10px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--primary-color),
+                transparent
+            );
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: glow 2s infinite linear;
+            z-index: -1;
+        }
+        
+        .social-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .social-name {
+            font-size: 0.9rem;
+            font-weight: 500;
         }
         
         /* استایل طرح‌های مشاوره */
@@ -367,6 +458,28 @@
             box-shadow: var(--box-shadow);
             width: 100%;
             max-width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plan::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 10px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--primary-color),
+                transparent
+            );
+            border-radius: 50%;
+            filter: blur(8px);
+            animation: glow 3s infinite linear;
+            z-index: -1;
         }
         
         .plan-title {
@@ -423,6 +536,22 @@
             transition: var(--transition);
             text-decoration: none;
             color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: glow 2s infinite linear;
         }
         
         .call-btn {
@@ -447,6 +576,10 @@
             .boxes-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .social-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         @media (max-width: 768px) {
@@ -465,11 +598,13 @@
             }
             
             .profile-name {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
+                flex-direction: column;
             }
             
-            .slide-img {
-                height: 300px;
+            .instagram-followers {
+                margin-right: 0;
+                margin-top: 10px;
             }
             
             .plans-container {
@@ -477,18 +612,6 @@
                 align-items: center;
             }
             
-            .cover-container, .cover-img {
-                height: 200px;
-            }
-            
-            .profile-img {
-                width: 120px;
-                height: 120px;
-                margin-top: -60px;
-            }
-        }
-        
-        @media (max-width: 480px) {
             .cover-container, .cover-img {
                 height: 150px;
             }
@@ -499,8 +622,32 @@
                 margin-top: -50px;
             }
             
+            .loading-text {
+                font-size: 5rem;
+            }
+            
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .cover-container, .cover-img {
+                height: 120px;
+            }
+            
+            .profile-img {
+                width: 80px;
+                height: 80px;
+                margin-top: -40px;
+            }
+            
             .profile-name {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
+            }
+            
+            .follower-count {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -509,21 +656,24 @@
     <!-- لودینگ -->
     <div id="loading">
         <div class="loading-text" id="loading-percent">۰٪</div>
-        <div class="loading-bar">
-            <div class="loading-progress" id="loading-progress"></div>
-        </div>
     </div>
     
     <!-- صفحه اصلی -->
     <div class="main-page active" id="main-page">
         <div class="profile-header">
             <div class="cover-container">
-                <img src="https://via.placeholder.com/851x315/1877f2/ffffff?text=کاور+پروفایل" alt="کاور پروفایل" class="cover-img" id="cover-img">
+                <img src="https://via.placeholder.com/851x200/1877f2/ffffff?text=کاور+پروفایل" alt="کاور پروفایل" class="cover-img" id="cover-img">
             </div>
             <div class="profile-info">
-                <img src="https://via.placeholder.com/170x170/42b72a/ffffff?text=عکس+پروفایل" alt="احسان افشارمنش" class="profile-img" id="profile-img">
+                <img src="https://via.placeholder.com/120x120/42b72a/ffffff?text=عکس+پروفایل" alt="احسان افشارمنش" class="profile-img" id="profile-img">
                 <div class="profile-text">
-                    <h1 class="profile-name">احسان افشارمنش</h1>
+                    <h1 class="profile-name">
+                        احسان افشارمنش
+                        <div class="instagram-followers">
+                            <div class="follower-count" id="follower-count">۰</div>
+                            <div class="follower-text">Insta Followers</div>
+                        </div>
+                    </h1>
                     <p class="profile-title">مشاور تحصیلی و کنکور</p>
                 </div>
             </div>
@@ -748,44 +898,46 @@
         
         <div class="container">
             <h2>فضای مجازی</h2>
+            
+            <!-- اسلایدر شبکه‌های اجتماعی -->
             <div class="slider-container">
                 <div class="slider" id="social-slider">
                     <div class="slide">
-                        <div style="padding: 40px; text-align: center; height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                            <i class="fab fa-instagram" style="font-size: 5rem; color: #E1306C; margin-bottom: 20px;"></i>
-                            <h3>اینستاگرام</h3>
-                            <p style="margin: 20px 0;">@ehsan_afsharmanesh</p>
-                            <a href="https://www.instagram.com/ehsan_afsharmanesh" target="_blank" class="contact-btn" style="background: #E1306C; display: inline-flex;">
+                        <div class="slide-content">
+                            <i class="fab fa-instagram slide-icon" style="color: #E1306C;"></i>
+                            <h3 class="slide-title">اینستاگرام</h3>
+                            <p class="slide-handle">@ehsan_afsharmanesh</p>
+                            <a href="https://www.instagram.com/ehsan_afsharmanesh" target="_blank" class="contact-btn" style="background: #E1306C; display: inline-flex; padding: 10px 20px;">
                                 <i class="fab fa-instagram"></i> مشاهده صفحه
                             </a>
                         </div>
                     </div>
                     <div class="slide">
-                        <div style="padding: 40px; text-align: center; height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                            <i class="fab fa-whatsapp" style="font-size: 5rem; color: #25D366; margin-bottom: 20px;"></i>
-                            <h3>واتساپ</h3>
-                            <p style="margin: 20px 0;">09131467038</p>
-                            <a href="https://wa.me/989131467038" target="_blank" class="contact-btn" style="background: #25D366; display: inline-flex;">
+                        <div class="slide-content">
+                            <i class="fab fa-whatsapp slide-icon" style="color: #25D366;"></i>
+                            <h3 class="slide-title">واتساپ</h3>
+                            <p class="slide-handle">09131467038</p>
+                            <a href="https://wa.me/989131467038" target="_blank" class="contact-btn" style="background: #25D366; display: inline-flex; padding: 10px 20px;">
                                 <i class="fab fa-whatsapp"></i> ارسال پیام
                             </a>
                         </div>
                     </div>
                     <div class="slide">
-                        <div style="padding: 40px; text-align: center; height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                            <i class="fab fa-telegram" style="font-size: 5rem; color: #0088cc; margin-bottom: 20px;"></i>
-                            <h3>تلگرام</h3>
-                            <p style="margin: 20px 0;">09131467038</p>
-                            <a href="https://t.me/09131467038" target="_blank" class="contact-btn" style="background: #0088cc; display: inline-flex;">
+                        <div class="slide-content">
+                            <i class="fab fa-telegram slide-icon" style="color: #0088cc;"></i>
+                            <h3 class="slide-title">تلگرام</h3>
+                            <p class="slide-handle">09131467038</p>
+                            <a href="https://t.me/09131467038" target="_blank" class="contact-btn" style="background: #0088cc; display: inline-flex; padding: 10px 20px;">
                                 <i class="fab fa-telegram"></i> ارسال پیام
                             </a>
                         </div>
                     </div>
                     <div class="slide">
-                        <div style="padding: 40px; text-align: center; height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <div class="slide-content">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Shad.ir_logo.svg/1200px-Shad.ir_logo.svg.png" alt="شاد" style="width: 80px; height: 80px; margin-bottom: 20px;">
-                            <h3>شاد</h3>
-                            <p style="margin: 20px 0;">اپلیکیشن شاد</p>
-                            <a href="#" class="contact-btn" style="background: #4CAF50; display: inline-flex;">
+                            <h3 class="slide-title">شاد</h3>
+                            <p class="slide-handle">اپلیکیشن شاد</p>
+                            <a href="#" class="contact-btn" style="background: #4CAF50; display: inline-flex; padding: 10px 20px;">
                                 <i class="fas fa-external-link-alt"></i> ورود به شاد
                             </a>
                         </div>
@@ -797,6 +949,29 @@
                 <button class="slider-nav next" onclick="nextSlide('social-slider')">
                     <i class="fas fa-chevron-left"></i>
                 </button>
+            </div>
+            
+            <!-- شبکه‌های اجتماعی زیر اسلایدر -->
+            <div class="social-grid">
+                <a href="https://www.instagram.com/ehsan_afsharmanesh" target="_blank" class="social-item">
+                    <i class="fab fa-instagram social-icon" style="color: #E1306C;"></i>
+                    <div class="social-name">اینستاگرام</div>
+                </a>
+                
+                <a href="https://wa.me/989131467038" target="_blank" class="social-item">
+                    <i class="fab fa-whatsapp social-icon" style="color: #25D366;"></i>
+                    <div class="social-name">واتساپ</div>
+                </a>
+                
+                <a href="https://t.me/09131467038" target="_blank" class="social-item">
+                    <i class="fab fa-telegram social-icon" style="color: #0088cc;"></i>
+                    <div class="social-name">تلگرام</div>
+                </a>
+                
+                <a href="#" class="social-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Shad.ir_logo.svg/1200px-Shad.ir_logo.svg.png" alt="شاد" style="width: 40px; height: 40px;">
+                    <div class="social-name">شاد</div>
+                </a>
             </div>
         </div>
     </div>
@@ -869,24 +1044,39 @@
         document.addEventListener('DOMContentLoaded', function() {
             let progress = 0;
             const loadingPercent = document.getElementById('loading-percent');
-            const loadingProgress = document.getElementById('loading-progress');
             const loading = document.getElementById('loading');
             const mainPage = document.getElementById('main-page');
             
             const interval = setInterval(() => {
                 progress += 2;
                 loadingPercent.textContent = `${progress}٪`;
-                loadingProgress.style.width = `${progress}%`;
                 
                 if (progress >= 100) {
                     clearInterval(interval);
                     setTimeout(() => {
                         loading.style.display = 'none';
                         mainPage.classList.add('active');
+                        startFollowerCount();
                     }, 500);
                 }
             }, 30);
         });
+        
+        // شمارش فالوورها
+        function startFollowerCount() {
+            let count = 0;
+            const followerCount = document.getElementById('follower-count');
+            const target = 10;
+            
+            const interval = setInterval(() => {
+                count++;
+                followerCount.textContent = count + 'K';
+                
+                if (count >= target) {
+                    clearInterval(interval);
+                }
+            }, 1000); // 10 ثانیه برای رسیدن به 10
+        }
         
         // مدیریت نمایش صفحات
         document.querySelectorAll('.box').forEach(box => {
@@ -951,14 +1141,6 @@
         
         // مقداردهی اولیه
         resetSliders();
-        
-        // انیمیشن برای اسلایدر شبکه‌های اجتماعی
-        const socialSlider = document.getElementById('social-slider');
-        if (socialSlider) {
-            setInterval(() => {
-                nextSlide('social-slider');
-            }, 4000);
-        }
         
         // توابع برای تغییر عکس‌ها
         function changeCoverImage(url) {
