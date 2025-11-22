@@ -97,7 +97,7 @@
         
         .cover-container {
             width: 100%;
-            height: 200px;
+            height: 100px; /* ارتفاع نصف شده */
             background-color: #e9ebee;
             overflow: hidden;
         }
@@ -196,7 +196,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
-        /* انیمیشن نور زیر باکس */
+        /* انیمیشن نور زیر باکس - همیشه فعال */
         .box::after {
             content: '';
             position: absolute;
@@ -213,22 +213,23 @@
             );
             border-radius: 50%;
             filter: blur(10px);
-            animation: glow 2s infinite linear;
+            animation: glow 3s infinite linear;
             z-index: -1;
+            opacity: 0.7;
         }
         
         @keyframes glow {
             0% {
-                opacity: 0.3;
-                transform: translateX(-50%) scale(0.8);
+                opacity: 0.5;
+                transform: translateX(-50%) rotate(0deg);
             }
             50% {
-                opacity: 0.7;
-                transform: translateX(-50%) scale(1.1);
+                opacity: 0.8;
+                transform: translateX(-50%) rotate(180deg);
             }
             100% {
-                opacity: 0.3;
-                transform: translateX(-50%) scale(0.8);
+                opacity: 0.5;
+                transform: translateX(-50%) rotate(360deg);
             }
         }
         
@@ -299,7 +300,6 @@
             margin: 0 auto 40px;
             overflow: hidden;
             border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
         }
         
         .slider {
@@ -320,12 +320,31 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: var(--white);
+            background: transparent;
         }
         
         .slide-icon {
-            font-size: 4rem;
+            font-size: 5rem;
             margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .slide-icon::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: rotate 2s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .slide-title {
@@ -358,6 +377,7 @@
             transition: var(--transition);
             z-index: 5;
             animation: blink 2s infinite;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         @keyframes blink {
@@ -382,10 +402,16 @@
         /* شبکه‌های اجتماعی زیر اسلایدر */
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             max-width: 800px;
             margin: 0 auto;
+        }
+        
+        @media (min-width: 768px) {
+            .social-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
         }
         
         .social-item {
@@ -402,7 +428,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 120px;
+            min-height: 100px;
             position: relative;
             overflow: hidden;
         }
@@ -423,8 +449,9 @@
             );
             border-radius: 50%;
             filter: blur(5px);
-            animation: glow 2s infinite linear;
+            animation: glow 3s infinite linear;
             z-index: -1;
+            opacity: 0.7;
         }
         
         .social-item:hover {
@@ -438,7 +465,7 @@
         }
         
         .social-name {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
         }
         
@@ -480,6 +507,7 @@
             filter: blur(8px);
             animation: glow 3s infinite linear;
             z-index: -1;
+            opacity: 0.7;
         }
         
         .plan-title {
@@ -576,10 +604,6 @@
             .boxes-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
-            .social-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
         
         @media (max-width: 768px) {
@@ -612,10 +636,6 @@
                 align-items: center;
             }
             
-            .cover-container, .cover-img {
-                height: 150px;
-            }
-            
             .profile-img {
                 width: 100px;
                 height: 100px;
@@ -625,17 +645,9 @@
             .loading-text {
                 font-size: 5rem;
             }
-            
-            .social-grid {
-                grid-template-columns: 1fr;
-            }
         }
         
         @media (max-width: 480px) {
-            .cover-container, .cover-img {
-                height: 120px;
-            }
-            
             .profile-img {
                 width: 80px;
                 height: 80px;
@@ -648,6 +660,10 @@
             
             .follower-count {
                 font-size: 1.2rem;
+            }
+            
+            .social-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -662,7 +678,7 @@
     <div class="main-page active" id="main-page">
         <div class="profile-header">
             <div class="cover-container">
-                <img src="https://via.placeholder.com/851x200/1877f2/ffffff?text=کاور+پروفایل" alt="کاور پروفایل" class="cover-img" id="cover-img">
+                <img src="https://via.placeholder.com/851x100/1877f2/ffffff?text=کاور+پروفایل" alt="کاور پروفایل" class="cover-img" id="cover-img">
             </div>
             <div class="profile-info">
                 <img src="https://via.placeholder.com/120x120/42b72a/ffffff?text=عکس+پروفایل" alt="احسان افشارمنش" class="profile-img" id="profile-img">
@@ -712,12 +728,12 @@
                 <p class="box-desc">رزرو وقت از طریق تماس تلفنی</p>
             </div>
             
-            <div class="box" data-target="service1-page">
+            <div class="box" data-target="maps-page">
                 <div class="box-icon">
-                    <i class="fas fa-cogs"></i>
+                    <i class="fas fa-map-marker-alt"></i>
                 </div>
-                <h3 class="box-title">خدمات ویژه ۱</h3>
-                <p class="box-desc">خدمات اختصاصی مشاوره</p>
+                <h3 class="box-title">مسیریابی</h3>
+                <p class="box-desc">مراجعه حضوری</p>
             </div>
             
             <div class="box" data-target="service2-page">
@@ -899,7 +915,7 @@
         <div class="container">
             <h2>فضای مجازی</h2>
             
-            <!-- اسلایدر شبکه‌های اجتماعی -->
+            <!-- اسلایدر شبکه‌های اجتماعی - حالت چرخشی -->
             <div class="slider-container">
                 <div class="slider" id="social-slider">
                     <div class="slide">
@@ -934,7 +950,7 @@
                     </div>
                     <div class="slide">
                         <div class="slide-content">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Shad.ir_logo.svg/1200px-Shad.ir_logo.svg.png" alt="شاد" style="width: 80px; height: 80px; margin-bottom: 20px;">
+                            <i class="fas fa-graduation-cap slide-icon" style="color: #4CAF50;"></i>
                             <h3 class="slide-title">شاد</h3>
                             <p class="slide-handle">اپلیکیشن شاد</p>
                             <a href="#" class="contact-btn" style="background: #4CAF50; display: inline-flex; padding: 10px 20px;">
@@ -951,7 +967,7 @@
                 </button>
             </div>
             
-            <!-- شبکه‌های اجتماعی زیر اسلایدر -->
+            <!-- شبکه‌های اجتماعی زیر اسلایدر - 6 مورد -->
             <div class="social-grid">
                 <a href="https://www.instagram.com/ehsan_afsharmanesh" target="_blank" class="social-item">
                     <i class="fab fa-instagram social-icon" style="color: #E1306C;"></i>
@@ -969,8 +985,18 @@
                 </a>
                 
                 <a href="#" class="social-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Shad.ir_logo.svg/1200px-Shad.ir_logo.svg.png" alt="شاد" style="width: 40px; height: 40px;">
+                    <i class="fas fa-graduation-cap social-icon" style="color: #4CAF50;"></i>
                     <div class="social-name">شاد</div>
+                </a>
+                
+                <a href="https://taa24.ir/" target="_blank" class="social-item">
+                    <i class="fas fa-globe social-icon" style="color: #FF9800;"></i>
+                    <div class="social-name">وبسایت آزمون</div>
+                </a>
+                
+                <a href="https://moshaverin.blog.ir/" target="_blank" class="social-item">
+                    <i class="fas fa-blog social-icon" style="color: #9C27B0;"></i>
+                    <div class="social-name">وبلاگ مشاورین</div>
                 </a>
             </div>
         </div>
@@ -1016,18 +1042,25 @@
         </div>
     </div>
     
-    <!-- صفحات خدمات ویژه -->
-    <div class="inner-page" id="service1-page">
+    <!-- صفحه مسیریابی -->
+    <div class="inner-page" id="maps-page">
         <button class="back-btn" onclick="goBack()">
             <i class="fas fa-arrow-right"></i>
         </button>
         
         <div class="container">
-            <h2>خدمات ویژه ۱</h2>
-            <p style="text-align: center; margin: 30px 0;">این بخش برای خدمات ویژه در نظر گرفته شده است. محتوای این بخش را می‌توانید در آینده تغییر دهید.</p>
+            <h2>مسیریابی برای مراجعه حضوری</h2>
+            <p style="text-align: center; margin: 30px 0;">برای مشاهده موقعیت روی نقشه و مسیریابی، بر روی دکمه زیر کلیک کنید.</p>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://maps.app.goo.gl/86Wg2q2DHRgtU4Y8A" target="_blank" class="contact-btn" style="background: #34A853; display: inline-flex;">
+                    <i class="fas fa-map-marker-alt"></i> مسیریابی گوگل
+                </a>
+            </div>
         </div>
     </div>
     
+    <!-- صفحات خدمات ویژه -->
     <div class="inner-page" id="service2-page">
         <button class="back-btn" onclick="goBack()">
             <i class="fas fa-arrow-right"></i>
@@ -1148,7 +1181,7 @@
         }
         
         function changeProfileImage(url) {
-            document.getElementById('profile-img').src = url;
+            document.getElementById('profile-img').src = https://statics.doctoreto.com/preset:sharp/resize:fill:300:300:0/gravity:sm/plain/s3://drto/avatar/doctor/2023/11/KNSIMdgWQx1U7vVWn6pvCZ4uQuFe0JBn5GbHTP1i.jpg;
         }
     </script>
 </body>
