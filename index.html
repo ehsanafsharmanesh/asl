@@ -857,47 +857,36 @@
     </div>
 
     <script>
-        // بهینه‌سازی لودینگ هوشمند برای سرعت بالاتر
-        document.addEventListener('DOMContentLoaded', function() {
-            let progress = 0;
-            const loadingPercent = document.getElementById('loading-percent');
-            const loading = document.getElementById('loading');
-            const mainPage = document.getElementById('main-page');
+// لودینگ زمان‌بندی شده از ۰ تا ۱۰۰
+document.addEventListener('DOMContentLoaded', function() {
+    let progress = 0;
+    const loadingPercent = document.getElementById('loading-percent');
+    const loading = document.getElementById('loading');
+    const mainPage = document.getElementById('main-page');
+
+    // هر 25 میلی‌ثانیه، 1 درصد به شمارنده اضافه می‌شود
+    const fakeLoaderInterval = setInterval(() => {
+        progress += 1;
+        loadingPercent.textContent = `${progress}٪`;
+
+        // وقتی به ۱۰۰ رسید، متوقف شده و صفحه را باز می‌کند
+        if (progress >= 100) {
+            clearInterval(fakeLoaderInterval);
             
-            // شروع سریع شمارش به صورت فیک تا 90%
-            const fakeLoaderInterval = setInterval(() => {
-                if (progress < 90) {
-                    progress += Math.floor(Math.random() * 5) + 1; // پرش‌های تصادفی
-                    if (progress > 90) progress = 90;
-                    loadingPercent.textContent = `${progress}٪`;
-                }
-            }, 40);
-
-            // تابع بستن صفحه لودینگ
-            const finishLoading = () => {
-                clearInterval(fakeLoaderInterval);
-                progress = 100;
-                loadingPercent.textContent = `${progress}٪`;
-                
+            setTimeout(() => {
+                loading.style.opacity = '0';
                 setTimeout(() => {
-                    loading.style.opacity = '0';
-                    setTimeout(() => {
-                        loading.style.display = 'none';
-                        if (!mainPage.classList.contains('active')) {
-                            mainPage.classList.add('active');
-                            startFollowerCount();
-                            resetSliders();
-                        }
-                    }, 500);
-                }, 200);
-            };
-
-            // پس از لود شدن کامل منابع، 100% شود و بسته شود
-            window.addEventListener('load', finishLoading);
-
-            // در صورتی که اینترنت کاربر ضعیف باشد نهایتا بعد از 3 ثانیه صفحه به کاربر نشان داده شود
-            setTimeout(finishLoading, 3000);
-        });
+                    loading.style.display = 'none';
+                    if (!mainPage.classList.contains('active')) {
+                        mainPage.classList.add('active');
+                        startFollowerCount();
+                        resetSliders();
+                    }
+                }, 500); // زمان انیمیشن محو شدن لودینگ
+            }, 200); // مکث کوتاه روی عدد 100
+        }
+    }, 25); // این عدد سرعت شمارش را تعیین می‌کند
+});
         
         // شمارش فالوورها
         function startFollowerCount() {
