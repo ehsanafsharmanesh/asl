@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ehsanafsharmanesh.github.io/asl/sitemap.xml
+Sitemap: https://tahsili24.ir/sitemap.xml
