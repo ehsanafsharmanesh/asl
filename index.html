@@ -63,6 +63,7 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            transition: opacity 0.5s ease;
         }
         
         .loading-text {
@@ -276,7 +277,7 @@
             left: 3px; 
             right: 3px;
             bottom: 3px; 
-            background: var(--white); /* رنگ داخلی باید سفید باشد تا پس‌زمینه سایت از زیرش دیده نشود */
+            background: var(--white); 
             border-radius: calc(var(--border-radius) - 3px); 
             z-index: 2; 
         }
@@ -860,8 +861,8 @@
     </div>
 
     <script>
-        // مدیریت لودینگ - اصلاح شد
-        document.addEventListener('DOMContentLoaded', function() {
+        // مدیریت لودینگ - تغییر به window.onload برای حل مشکل لود پیج و رندرینگ واقعی تصاویر
+        window.addEventListener('load', function() {
             let progress = 0;
             const loadingPercent = document.getElementById('loading-percent');
             const loading = document.getElementById('loading');
@@ -874,13 +875,16 @@
                 if (progress >= 100) {
                     clearInterval(interval);
                     
-                    // عملیات نهایی برای نمایش صفحه اصلی
-                    loading.style.display = 'none';
-                    mainPage.classList.add('active');
-                    startFollowerCount();
-                    resetSliders(); // اطمینان از مقداردهی اولیه اسلایدرها
+                    // عملیات نهایی برای نمایش صفحه اصلی با ترانزیشن ملایم
+                    loading.style.opacity = '0';
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                        mainPage.classList.add('active');
+                        startFollowerCount();
+                        resetSliders(); // اطمینان از مقداردهی اولیه اسلایدرها
+                    }, 500); // 500ms توقف برای محو شدن (انیمیشن)
                 }
-            }, 30);
+            }, 10); // سرعت لود کمی بیشتر شد
         });
         
         // شمارش فالوورها
@@ -929,7 +933,7 @@
             document.getElementById('main-page').classList.add('active');
         }
         
-        // مدیریت اسلایدرهای لوپ (چرخشی) - اصلاح نهایی
+        // مدیریت اسلایدرهای لوپ (چرخشی) - اصلاح نهایی برای RTL
         let currentSlides = {};
         
         function resetSliders() {
@@ -950,7 +954,8 @@
             current = (current + 1) % totalSlides;
             currentSlides[sliderId] = current;
             
-            slider.style.transform = `translateX(-${current * 100}%)`;
+            // در حالت RTL برای رفتن به اسلاید بعدی (چپ) مقدار حرکت X باید مثبت باشد
+            slider.style.transform = `translateX(${current * 100}%)`;
         }
         
         function prevSlide(sliderId) {
@@ -964,7 +969,8 @@
             current = (current - 1 + totalSlides) % totalSlides; 
             currentSlides[sliderId] = current;
             
-            slider.style.transform = `translateX(-${current * 100}%)`;
+            // در حالت RTL برای رفتن به اسلاید قبلی (راست) مقدار حرکت X باید مثبت باشد
+            slider.style.transform = `translateX(${current * 100}%)`;
         }
         
         // توابع برای تغییر عکس‌ها (بدون تغییر)
@@ -978,4 +984,3 @@
     </script>
 </body>
 </html>
-
