@@ -85,7 +85,6 @@
             display: flex; 
         }
 
-
         /* --- CSS برای صفحات داخلی (Inner Pages) --- */
         .inner-page {
             display: none; 
@@ -105,7 +104,7 @@
         }
 
         .back-btn {
-            position: fixed; /* تغییر به fixed برای اینکه با اسکرول بالا نرود */
+            position: fixed; 
             top: 20px;
             right: 20px;
             background: var(--primary-color);
@@ -238,7 +237,6 @@
              padding: 20px;
         }
 
-        /* محتوای باکس باید روی لایه ماسک قرار گیرد */
         .box-icon, .box-title, .box-desc, 
         .plan-title, .plan-list, .plan-item,
         .social-icon, .social-name, .contact-options,
@@ -247,7 +245,6 @@
             z-index: 3; 
         }
 
-        /* ۱. عنصر چرخان نور (فتیله باروت) - لایه زیرین */
         .box::before, .plan::before, .social-item::before {
             content: '';
             position: absolute;
@@ -269,7 +266,6 @@
             border-radius: 50%; 
         }
 
-        /* ۲. عنصر ماسک داخلی - لایه میانی */
         .box::after, .plan::after, .social-item::after {
             content: '';
             position: absolute;
@@ -282,7 +278,7 @@
             z-index: 2; 
         }
 
-        /* --- استایل اسلایدر و تصاویر (لوپ) --- */
+        /* --- استایل اسلایدر و تصاویر --- */
         .slide {
             min-width: 100%; 
             position: relative;
@@ -592,19 +588,19 @@
             <div class="slider-container">
                 <div class="slider" id="success-slider">
                     <div class="slide">
-                        <img src="https://via.placeholder.com/800x400/1877f2/ffffff?text=کارنامه+دانشجو+۱" alt="کارنامه دانشجو ۱" class="slide-img">
+                        <img src="https://via.placeholder.com/800x400/1877f2/ffffff?text=کارنامه+دانشجو+۱" loading="lazy" alt="کارنامه دانشجو ۱" class="slide-img">
                         <div class="slide-caption">
                             <p>محسن شفیع پور شهربابکی - رتبه 06 کنکور تجربی - منطقه3</p>
                         </div>
                     </div>
                     <div class="slide">
-                        <img src="https://via.placeholder.com/800x400/42b72a/ffffff?text=کارنامه+دانشجو+۲" alt="کارنامه دانشجو ۲" class="slide-img">
+                        <img src="https://via.placeholder.com/800x400/42b72a/ffffff?text=کارنامه+دانشجو+۲" loading="lazy" alt="کارنامه دانشجو ۲" class="slide-img">
                         <div class="slide-caption">
                             <p>سارا احمدی - رتبه ۲۳ کنکور ریاضی - دانشگاه شریف</p>
                         </div>
                     </div>
                     <div class="slide">
-                        <img src="https://via.placeholder.com/800x400/ff6b6b/ffffff?text=کارنامه+دانشجو+۳" alt="کارنامه دانشجو ۳" class="slide-img">
+                        <img src="https://via.placeholder.com/800x400/ff6b6b/ffffff?text=کارنامه+دانشجو+۳" loading="lazy" alt="کارنامه دانشجو ۳" class="slide-img">
                         <div class="slide-caption">
                             <p>احمد رضایی استخروئیه - رتبه 10 کنکور انسانی - دانشگاه تهران</p>
                         </div>
@@ -682,13 +678,13 @@
             <div class="slider-container">
                 <div class="slider" id="books-slider">
                     <div class="slide">
-                        <img src="https://www.ketabium.com/images/1187655.webp" alt="کتاب گروه درمانی شناختی رفتاری افسردگی" class="slide-img">
+                        <img src="https://www.ketabium.com/images/1187655.webp" loading="lazy" alt="کتاب گروه درمانی شناختی رفتاری افسردگی" class="slide-img">
                     </div>
                     <div class="slide">
-                        <img src="https://www.ketabium.com/images/1295474.jpg" alt="کتاب مذهب، شخصیت و کمال گرایی" class="slide-img">
+                        <img src="https://www.ketabium.com/images/1295474.jpg" loading="lazy" alt="کتاب مذهب، شخصیت و کمال گرایی" class="slide-img">
                     </div>
                     <div class="slide">
-                        <img src="https://via.placeholder.com/800x400/e74c3c/ffffff?text=کتاب+تکنیک‌های+تست‌زنی" alt="کتاب تکنیک‌های تست‌زنی" class="slide-img">
+                        <img src="https://via.placeholder.com/800x400/e74c3c/ffffff?text=کتاب+تکنیک‌های+تست‌زنی" loading="lazy" alt="کتاب تکنیک‌های تست‌زنی" class="slide-img">
                     </div>
                 </div>
                 <button class="slider-nav prev" onclick="prevSlide('books-slider')">
@@ -861,30 +857,46 @@
     </div>
 
     <script>
-        // مدیریت لودینگ - تغییر به window.onload برای حل مشکل لود پیج و رندرینگ واقعی تصاویر
-        window.addEventListener('load', function() {
+        // بهینه‌سازی لودینگ هوشمند برای سرعت بالاتر
+        document.addEventListener('DOMContentLoaded', function() {
             let progress = 0;
             const loadingPercent = document.getElementById('loading-percent');
             const loading = document.getElementById('loading');
             const mainPage = document.getElementById('main-page');
             
-            const interval = setInterval(() => {
-                progress += 2;
+            // شروع سریع شمارش به صورت فیک تا 90%
+            const fakeLoaderInterval = setInterval(() => {
+                if (progress < 90) {
+                    progress += Math.floor(Math.random() * 5) + 1; // پرش‌های تصادفی
+                    if (progress > 90) progress = 90;
+                    loadingPercent.textContent = `${progress}٪`;
+                }
+            }, 40);
+
+            // تابع بستن صفحه لودینگ
+            const finishLoading = () => {
+                clearInterval(fakeLoaderInterval);
+                progress = 100;
                 loadingPercent.textContent = `${progress}٪`;
                 
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    
-                    // عملیات نهایی برای نمایش صفحه اصلی با ترانزیشن ملایم
+                setTimeout(() => {
                     loading.style.opacity = '0';
                     setTimeout(() => {
                         loading.style.display = 'none';
-                        mainPage.classList.add('active');
-                        startFollowerCount();
-                        resetSliders(); // اطمینان از مقداردهی اولیه اسلایدرها
-                    }, 500); // 500ms توقف برای محو شدن (انیمیشن)
-                }
-            }, 10); // سرعت لود کمی بیشتر شد
+                        if (!mainPage.classList.contains('active')) {
+                            mainPage.classList.add('active');
+                            startFollowerCount();
+                            resetSliders();
+                        }
+                    }, 500);
+                }, 200);
+            };
+
+            // پس از لود شدن کامل منابع، 100% شود و بسته شود
+            window.addEventListener('load', finishLoading);
+
+            // در صورتی که اینترنت کاربر ضعیف باشد نهایتا بعد از 3 ثانیه صفحه به کاربر نشان داده شود
+            setTimeout(finishLoading, 3000);
         });
         
         // شمارش فالوورها
@@ -973,7 +985,7 @@
             slider.style.transform = `translateX(${current * 100}%)`;
         }
         
-        // توابع برای تغییر عکس‌ها (بدون تغییر)
+        // توابع برای تغییر عکس‌ها
         function changeCoverImage(url) {
             document.getElementById('cover-img').src = url;
         }
