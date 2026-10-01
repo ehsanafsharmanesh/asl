@@ -71,22 +71,11 @@
             transition: opacity 0.5s ease;
         }
         
-        #loading.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
         .loading-text {
             font-size: 8rem;
             font-weight: bold;
             color: var(--primary-color);
             font-family: 'Orbitron', sans-serif;
-            animation: pulse-load 1.2s ease-in-out infinite;
-        }
-        
-        @keyframes pulse-load {
-            0%, 100% { opacity: 0.55; transform: scale(0.97); }
-            50% { opacity: 1; transform: scale(1); }
         }
         
         .main-page {
@@ -648,7 +637,7 @@
 </head>
 <body>
     <div id="loading">
-        <div class="loading-text" id="loading-percent">۰</div>
+        <div class="loading-text" id="loading-percent">۰٪</div>
     </div>
     
     <div class="main-page" id="main-page">
@@ -1164,31 +1153,44 @@
     </div>
 
     <script>
-        // ===== لودر: اصلاح‌شده برای سرعت (بر اساس رویداد load واقعی) =====
-        const loading = document.getElementById('loading');
-        const loadingPercent = document.getElementById('loading-percent');
-        const mainPage = document.getElementById('main-page');
+        // ===== لودینگ ۰ تا ۱۰۰ با صبر تا اتمام واقعی load =====
+        document.addEventListener('DOMContentLoaded', function() {
+            let progress = 0;
+            let pageLoaded = false;
+            const loadingPercent = document.getElementById('loading-percent');
+            const loading = document.getElementById('loading');
+            const mainPage = document.getElementById('main-page');
 
-        function hideLoader() {
-            if (loading.classList.contains('hidden')) return;
-            loading.classList.add('hidden');
-            setTimeout(() => {
-                loading.style.display = 'none';
-                if (!mainPage.classList.contains('active')) {
-                    mainPage.classList.add('active');
-                    startFollowerCount();
-                    resetSliders();
+            // وقتی window کاملاً لود شد، پرچم را بالا ببر
+            window.addEventListener('load', () => { pageLoaded = true; });
+
+            const fakeLoaderInterval = setInterval(() => {
+                progress += 1;
+
+                // وقتی به ۹۵ رسید، سرعت را کم کن تا منتظر load بماند
+                if (progress >= 95 && !pageLoaded) {
+                    progress = 95;
                 }
-            }, 450);
-        }
 
-        window.addEventListener('load', () => {
-            loadingPercent.textContent = '١٠٠';
-            setTimeout(hideLoader, 250);
+                loadingPercent.textContent = `${progress}٪`;
+
+                if (progress >= 100) {
+                    clearInterval(fakeLoaderInterval);
+
+                    setTimeout(() => {
+                        loading.style.opacity = '0';
+                        setTimeout(() => {
+                            loading.style.display = 'none';
+                            if (!mainPage.classList.contains('active')) {
+                                mainPage.classList.add('active');
+                                startFollowerCount();
+                                resetSliders();
+                            }
+                        }, 500);
+                    }, 200);
+                }
+            }, 25);
         });
-
-        // فالبک: اگر ظرف ۳ ثانیه هنوز لود نشده بود
-        setTimeout(hideLoader, 3000);
         
         // شمارش فالوورها
         function startFollowerCount() {
