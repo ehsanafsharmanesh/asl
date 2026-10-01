@@ -586,11 +586,13 @@
             50% { box-shadow: 0 6px 30px rgba(255, 152, 0, 0.85); }
         }
 
-        @media (max-width: 768px) {
-            .boxes-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
+@media (max-width: 768px) {
+    .boxes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .box {
+        padding: 12px 10px;
+    }
             .profile-name {
                 font-size: 1.5rem;
             }
