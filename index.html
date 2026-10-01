@@ -3,108 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1877f2">
     <title>مشاوره تحصیلی | احسان افشارمنش</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- فونت‌ها: یک درخواست واحد + preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome: بارگذاری غیرمسدودکننده -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
     <style>
-        /* فونت‌ها */
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        
-        /* متغیرها */
         :root {
-            --primary-color: #1877f2; 
-            --secondary-color: #42b72a; 
-            --accent-color: #f0f2f5; 
+            --primary-color: #1877f2;
+            --secondary-color: #42b72a;
+            --accent-color: #f0f2f5;
             --text-color: #1c1e21;
             --light-text: #65676b;
             --white: #ffffff;
             --border-radius: 12px;
             --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
-            --spin-speed: 5s; /* سرعت چرخش انیمیشن */
         }
-        
-        /* استایل پایه */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
             font-family: 'Vazirmatn', sans-serif;
             background-color: var(--accent-color);
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
-            min-height: 100vh; 
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
-        
+
         h1, h2, h3, h4 {
             font-family: 'Vazirmatn', sans-serif;
             margin-bottom: 1rem;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
-        /* --- لودینگ و صفحه اصلی --- */
+
+        /* --- لودینگ --- */
         #loading {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: var(--white);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
         }
-        
+        #loading.hidden { opacity: 0; pointer-events: none; }
+
         .loading-text {
-            font-size: 8rem;
+            font-size: 6rem;
             font-weight: bold;
             color: var(--primary-color);
             font-family: 'Orbitron', sans-serif;
+            animation: pulse-load 1s ease-in-out infinite;
         }
-        
+        @keyframes pulse-load {
+            0%,100% { opacity: 0.6; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- صفحه اصلی --- */
         .main-page {
             min-height: 100vh;
-            display: none; 
-            flex-direction: column; 
-            padding: 20px 0; 
+            display: none;
+            flex-direction: column;
+            padding: 20px 0;
             position: relative;
         }
+        .main-page.active { display: flex; }
 
-        .main-page.active {
-            display: flex; 
-        }
-
-        /* --- CSS برای صفحات داخلی (Inner Pages) --- */
+        /* --- صفحات داخلی --- */
         .inner-page {
-            display: none; 
-            position: fixed; 
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh; 
-            overflow-y: auto; 
-            background-color: var(--accent-color); 
-            z-index: 900; 
-            padding: 20px 0; 
+            display: none;
+            position: fixed;
+            inset: 0;
+            height: 100vh;
+            overflow-y: auto;
+            background-color: var(--accent-color);
+            z-index: 900;
+            padding: 20px 0 100px;
+            -webkit-overflow-scrolling: touch;
         }
-
-        .inner-page.active {
-            display: block; 
-        }
+        .inner-page.active { display: block; }
 
         .back-btn {
-            position: fixed; 
+            position: fixed;
             top: 20px;
             right: 20px;
             background: var(--primary-color);
@@ -119,8 +119,9 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
             transition: var(--transition);
         }
-        
-        /* --- بخش پروفایل و کاور --- */
+        .back-btn:hover { background: #0e5fd1; transform: scale(1.05); }
+
+        /* --- پروفایل --- */
         .profile-header {
             position: relative;
             width: 100%;
@@ -129,21 +130,37 @@
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--box-shadow);
+            background: var(--white);
         }
-        
+
         .cover-container {
             width: 100%;
-            height: 100px;
-            background-color: #e9ebee;
+            height: 140px;
+            background: linear-gradient(135deg, #1877f2 0%, #42b72a 50%, #1877f2 100%);
+            background-size: 200% 200%;
+            animation: coverShift 8s ease infinite;
+            position: relative;
             overflow: hidden;
         }
-        
+        .cover-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.25), transparent 60%);
+            pointer-events: none;
+        }
+        @keyframes coverShift {
+            0%,100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
         .cover-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
-        
+
         .profile-info {
             display: flex;
             align-items: center;
@@ -151,7 +168,7 @@
             background: var(--white);
             position: relative;
         }
-        
+
         .profile-img {
             width: 120px;
             height: 120px;
@@ -161,12 +178,11 @@
             box-shadow: var(--box-shadow);
             margin-left: 15px;
             margin-top: -60px;
+            background: #eee;
         }
-        
-        .profile-text {
-            flex: 1;
-        }
-        
+
+        .profile-text { flex: 1; }
+
         .profile-name {
             font-size: 1.8rem;
             color: var(--primary-color);
@@ -175,33 +191,25 @@
             align-items: center;
             justify-content: space-between;
         }
-        
-        .profile-title {
-            font-size: 1rem;
-            color: var(--light-text);
-        }
-        
+
+        .profile-title { font-size: 1rem; color: var(--light-text); }
+
         .instagram-followers {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-right: 10px;
         }
-        
+
         .follower-count {
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--primary-color);
             font-family: 'Orbitron', sans-serif;
         }
-        
-        .follower-text {
-            font-size: 0.7rem;
-            color: var(--text-color);
-            margin-top: 2px;
-        }
-        
-        /* --- ساختار اصلی باکس‌ها --- */
+        .follower-text { font-size: 0.7rem; color: var(--text-color); margin-top: 2px; }
+
+        /* --- گرید باکس‌ها --- */
         .boxes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -210,90 +218,69 @@
             max-width: 900px;
             margin: 0 auto;
         }
-        
-        /* --- انیمیشن فتیله باروت --- */
-        @keyframes border-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
+
+        /* باکس‌ها - نسخه بهینه (حاشیه گرادیانی سبک جایگزین conic+blur) */
         .box, .social-item, .plan {
             background: var(--white);
             border-radius: var(--border-radius);
             padding: 25px;
             text-align: center;
             box-shadow: var(--box-shadow);
-            transition: var(--transition);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
             position: relative;
-            overflow: hidden; 
             cursor: pointer;
             min-height: 160px;
-            display: block; 
-            z-index: 1; 
+            display: block;
+            z-index: 1;
+            border: 2px solid transparent;
+            background-image:
+                linear-gradient(var(--white), var(--white)),
+                linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            will-change: transform;
+            contain: layout style paint;
         }
-        
-        .social-item {
-             min-height: 100px;
-             padding: 20px;
+        .box:hover, .plan:hover, .social-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.2);
         }
 
-        .box-icon, .box-title, .box-desc, 
+        .social-item { min-height: 100px; padding: 20px; }
+
+        .box-icon, .box-title, .box-desc,
         .plan-title, .plan-list, .plan-item,
-        .social-icon, .social-name, .contact-options,
-        .container h2, .container p { 
+        .social-icon, .social-name, .contact-options {
             position: relative;
-            z-index: 3; 
+            z-index: 2;
         }
 
-        .box::before, .plan::before, .social-item::before {
-            content: '';
-            position: absolute;
-            top: -50%; 
-            left: -50%; 
-            width: 200%; 
-            height: 200%;
-            background: conic-gradient(
-                transparent 0%, 
-                transparent 45%, 
-                var(--primary-color) 50%, 
-                transparent 55%, 
-                transparent 100%
-            );
-            filter: blur(8px); 
-            animation: border-spin var(--spin-speed) linear infinite; 
-            z-index: 0; 
-            opacity: 0.8;
-            border-radius: 50%; 
+        .box-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 12px;
         }
+        .box-title { font-size: 1.1rem; margin-bottom: 6px; color: var(--text-color); }
+        .box-desc { font-size: 0.85rem; color: var(--light-text); }
 
-        .box::after, .plan::after, .social-item::after {
-            content: '';
-            position: absolute;
-            top: 3px; 
-            left: 3px; 
-            right: 3px;
-            bottom: 3px; 
-            background: var(--white); 
-            border-radius: calc(var(--border-radius) - 3px); 
-            z-index: 2; 
-        }
-
-        /* --- استایل اسلایدر و تصاویر --- */
-        .slide {
-            min-width: 100%; 
-            position: relative;
-            flex-shrink: 0; 
-        }
-
+        /* --- اسلایدر --- */
+        .slide { min-width: 100%; position: relative; flex-shrink: 0; }
         .slide-img {
             width: 100%;
             height: auto;
-            max-height: 300px; 
-            object-fit: contain; 
+            max-height: 320px;
+            object-fit: contain;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
+            display: block;
         }
-        
+        .slide-caption {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
         .slider-container {
             position: relative;
             width: 100%;
@@ -302,12 +289,8 @@
             overflow: hidden;
             border-radius: var(--border-radius);
         }
-        
-        .slider {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-        
+        .slider { display: flex; transition: transform 0.45s cubic-bezier(0.4,0,0.2,1); }
+
         .slide-content {
             padding: 40px;
             text-align: center;
@@ -321,29 +304,28 @@
             box-shadow: var(--box-shadow);
             margin: 0 20px;
         }
+        .slide-icon { font-size: 3rem; margin-bottom: 15px; }
+        .slide-title { font-size: 1.3rem; margin-bottom: 5px; }
+        .slide-handle { color: var(--light-text); margin-bottom: 15px; }
 
         .slider-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.55);
             color: white;
             border: none;
-            padding: 10px;
+            padding: 10px 12px;
             cursor: pointer;
             z-index: 10;
             border-radius: 50%;
             transition: var(--transition);
         }
+        .slider-nav:hover { background: rgba(0, 0, 0, 0.8); }
+        .slider-nav.prev { right: 8px; }
+        .slider-nav.next { left: 8px; }
 
-        .slider-nav.prev {
-            right: 0px;
-        }
-
-        .slider-nav.next {
-            left: 0px;
-        }
-
+        /* --- پلن‌ها --- */
         .plans-container {
             display: flex;
             gap: 20px;
@@ -351,43 +333,20 @@
             margin-top: 20px;
             flex-wrap: wrap;
         }
+        .plan { flex: 1; min-width: 300px; max-width: 400px; text-align: right; }
+        .plan-title { text-align: center; color: var(--primary-color); }
+        .plan-list { list-style: none; padding: 0; margin-top: 15px; text-align: right; }
+        .plan-item { padding: 5px 0; display: flex; align-items: center; font-size: 0.95rem; }
+        .plan-item i { margin-left: 10px; color: var(--secondary-color); }
+        .plan-item i.fa-times { color: #e74c3c; }
 
-        .plan {
-            flex: 1;
-            min-width: 300px;
-            max-width: 400px;
-        }
-
-        .plan-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 15px;
-            text-align: right;
-        }
-
-        .plan-item {
-            padding: 5px 0;
-            display: flex;
-            align-items: center;
-            font-size: 0.95rem;
-        }
-
-        .plan-item i {
-            margin-left: 10px;
-            color: var(--secondary-color);
-        }
-
-        .plan-item i.fa-times {
-            color: #e74c3c;
-        }
-
+        /* --- شبکه اجتماعی --- */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 15px;
             margin-top: 20px;
         }
-
         .social-item {
             text-decoration: none;
             color: var(--text-color);
@@ -397,16 +356,10 @@
             justify-content: center;
             align-items: center;
         }
+        .social-icon { font-size: 2rem; margin-bottom: 5px; }
+        .social-name { font-weight: 500; }
 
-        .social-icon {
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        .social-name {
-            font-weight: 500;
-        }
-
+        /* --- دکمه‌ها --- */
         .contact-btn {
             display: inline-flex;
             align-items: center;
@@ -418,12 +371,10 @@
             text-decoration: none;
             font-weight: bold;
             margin-top: 15px;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
         }
-
-        .contact-btn i {
-            margin-left: 10px;
-        }
+        .contact-btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+        .contact-btn i { margin-left: 10px; }
 
         .contact-options {
             display: flex;
@@ -431,52 +382,193 @@
             gap: 20px;
             margin-top: 40px;
         }
+        .call-btn { background: #25D366; }
+        .sms-btn { background: #FF9800; }
 
-        .call-btn {
-            background: #25D366; 
+        /* --- تایم‌لاین مراحل انتخاب رشته --- */
+        .major-header { text-align: center; margin-bottom: 40px; }
+        .major-header h2 { color: var(--primary-color); font-size: 1.8rem; margin-bottom: 10px; }
+        .major-header p { color: var(--light-text); font-size: 1rem; }
+
+        .timeline {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 25px;
+            width: 4px;
+            background: linear-gradient(180deg, #1877f2, #42b72a, #1877f2);
+            border-radius: 2px;
         }
 
-        .sms-btn {
-            background: #FF9800; 
+        .timeline-item {
+            position: relative;
+            padding-right: 70px;
+            margin-bottom: 30px;
         }
 
+        /* انیمیشن سبک روی ظاهر شدن */
+        .timeline-item.reveal .timeline-content { animation: slideIn 0.5s ease forwards; }
+        .timeline-item.reveal .timeline-marker { animation: popIn 0.4s ease forwards; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .timeline-marker {
+            position: absolute;
+            right: 8px;
+            top: 15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 3px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);
+            z-index: 2;
+        }
+        .timeline-number { font-weight: bold; color: var(--primary-color); font-size: 1.1rem; }
+
+        .timeline-content {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .timeline-item.reveal .timeline-content { opacity: 1; }
+        .timeline-content:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .timeline-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+        .timeline-content h3 { font-size: 1.1rem; color: var(--text-color); margin-bottom: 8px; }
+        .timeline-content p { font-size: 0.9rem; color: var(--light-text); line-height: 1.7; margin: 0; }
+
+        .timeline-subtitle {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin: -4px 0 8px 0;
+            padding-right: 10px;
+            border-right: 3px solid var(--secondary-color);
+        }
+
+        /* مرحله ویژه ۶ */
+        .timeline-special .timeline-marker { border-color: #f39c12; box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.2); }
+        .timeline-special .timeline-number { color: #f39c12; }
+        .timeline-special .timeline-content {
+            background: linear-gradient(135deg, #fff9e6, #ffffff);
+            border: 2px solid #f39c12;
+        }
+        .timeline-special .timeline-icon { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .timeline-special .timeline-content strong { color: #e67e22; }
+
+        /* --- دکمه شناور پیامک --- */
+        .floating-sms {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: linear-gradient(135deg, #FF9800, #f39c12);
+            color: var(--white);
+            padding: 14px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.5);
+            z-index: 960;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            animation: pulse 2.5s infinite;
+        }
+        .floating-sms:hover { transform: translateY(-3px) scale(1.03); }
+        .floating-sms i { font-size: 1.2rem; }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 6px 20px rgba(255, 152, 0, 0.5); }
+            50% { box-shadow: 0 6px 30px rgba(255, 152, 0, 0.85); }
+        }
+
+        /* --- رسپانسیو --- */
         @media (max-width: 768px) {
-            .boxes-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .boxes-grid { grid-template-columns: repeat(2, 1fr); }
+            .profile-name { font-size: 1.5rem; }
+            .loading-text { font-size: 4rem; }
+            .contact-options { flex-direction: column; align-items: center; }
+            .plan { min-width: 90%; }
+        }
 
-            .profile-name {
-                font-size: 1.5rem;
+        @media (max-width: 600px) {
+            .timeline::before { right: 18px; }
+            .timeline-item { padding-right: 55px; }
+            .timeline-marker { right: 0; width: 36px; height: 36px; }
+            .timeline-number { font-size: 1rem; }
+            .floating-sms span { display: none; }
+            .floating-sms {
+                padding: 15px;
+                border-radius: 50%;
+                width: 58px;
+                height: 58px;
+                justify-content: center;
             }
+            .floating-sms i { font-size: 1.5rem; margin: 0; }
+        }
 
-            .loading-text {
-                font-size: 5rem;
-            }
-
-            .contact-options {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .plan {
-                min-width: 90%;
+        /* کاهش انیمیشن برای کاربرانی که ترجیح می‌دهند */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
-        
     </style>
 </head>
 <body>
     <div id="loading">
-        <div class="loading-text" id="loading-percent">۰٪</div>
+        <div class="loading-text">٠</div>
     </div>
-    
+
     <div class="main-page" id="main-page">
         <div class="profile-header">
             <div class="cover-container">
-                <img src="https://raw.githubusercontent.com/ehsanafsharmanesh/asl/refs/heads/main/gifcover.gif" alt="کاور پروفایل" class="cover-img" id="cover-img">
+                <img src="https://cdn.jsdelivr.net/gh/ehsanafsharmanesh/asl@main/gifcover.gif"
+                     alt="کاور پروفایل" class="cover-img" id="cover-img"
+                     fetchpriority="high" decoding="async" width="851" height="140">
             </div>
             <div class="profile-info">
-                <img src="https://statics.doctoreto.com/preset:sharp/resize:fill:300:300:0/gravity:sm/plain/s3://drto/avatar/doctor/2023/11/KNSIMdgWQx1U7vVWn6pvCZ4uQuFe0JBn5GbHTP1i.jpg" alt="احسان افشارمنش" class="profile-img" id="profile-img">
+                <img src="https://statics.doctoreto.com/preset:sharp/resize:fill:300:300:0/gravity:sm/plain/s3://drto/avatar/doctor/2023/11/KNSIMdgWQx1U7vVWn6pvCZ4uQuFe0JBn5GbHTP1i.jpg"
+                     alt="احسان افشارمنش" class="profile-img" id="profile-img"
+                     width="120" height="120" decoding="async">
                 <div class="profile-text">
                     <h1 class="profile-name">
                         احسان افشارمنش
@@ -489,165 +581,114 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="boxes-grid">
             <div class="box" data-target="intro-page">
-                <div class="box-icon">
-                    <i class="fas fa-user-graduate"></i>
-                </div>
+                <div class="box-icon"><i class="fas fa-user-graduate"></i></div>
                 <h3 class="box-title">معرفی مشاور</h3>
                 <p class="box-desc">آشنایی با سوابق و خدمات مشاوره</p>
             </div>
-            
             <div class="box" data-target="social-page">
-                <div class="box-icon">
-                    <i class="fas fa-hashtag"></i>
-                </div>
+                <div class="box-icon"><i class="fas fa-hashtag"></i></div>
                 <h3 class="box-title">فضای مجازی</h3>
                 <p class="box-desc">ارتباط از طریق شبکه‌های اجتماعی</p>
             </div>
-            
             <div class="box" data-target="appointment-page">
-                <div class="box-icon">
-                    <i class="fas fa-calendar-check"></i>
-                </div>
+                <div class="box-icon"><i class="fas fa-calendar-check"></i></div>
                 <h3 class="box-title">دریافت نوبت</h3>
                 <p class="box-desc">رزرو آنلاین وقت مشاوره</p>
             </div>
-            
             <div class="box" data-target="contact-page">
-                <div class="box-icon">
-                    <i class="fas fa-phone-alt"></i>
-                </div>
+                <div class="box-icon"><i class="fas fa-phone-alt"></i></div>
                 <h3 class="box-title">تماس مستقیم</h3>
                 <p class="box-desc">رزرو وقت از طریق تماس تلفنی</p>
             </div>
-            
             <div class="box" data-target="maps-page">
-                <div class="box-icon">
-                    <i class="fas fa-map-marker-alt"></i>
-                </div>
+                <div class="box-icon"><i class="fas fa-map-marker-alt"></i></div>
                 <h3 class="box-title">مسیریابی</h3>
                 <p class="box-desc">مراجعه حضوری</p>
             </div>
-            
             <div class="box" data-target="service2-page">
-                <div class="box-icon">
-                    <i class="fas fa-star"></i>
-                </div>
-                <h3 class="box-title">خدمات ویژه ۲</h3>
-                <p class="box-desc">پکیج‌های آموزشی ویژه</p>
+                <div class="box-icon"><i class="fas fa-star"></i></div>
+                <h3 class="box-title">مراحل انتخاب رشته</h3>
+                <p class="box-desc">روند ۹ مرحله‌ای انتخاب رشته</p>
             </div>
         </div>
     </div>
-    
+
+    <!-- معرفی -->
     <div class="inner-page" id="intro-page">
-        <button class="back-btn" onclick="goBack()">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-        
+        <button class="back-btn" onclick="goBack()" aria-label="بازگشت"><i class="fas fa-arrow-right"></i></button>
         <div class="container">
             <h2>معرفی مشاور</h2>
-            <p>احسان افشارمنش، مشاور تحصیلی با بیش از 23 سال سابقه در زمینه مشاوره و برنامه‌ریزی تحصیلی برای دانش‌آموزان و کنکوری‌ها. تخصص در انتخاب رشته کنکور سراسری و دانشگاه آزاد و آموزش روش‌های نوین مطالعه، مدیریت زمان و افزایش بازدهی تحصیلی .</p>
-            
+            <p>احسان افشارمنش، مشاور تحصیلی با بیش از 23 سال سابقه در زمینه مشاوره و برنامه‌ریزی تحصیلی برای دانش‌آموزان و کنکوری‌ها. تخصص در انتخاب رشته کنکور سراسری و دانشگاه آزاد و آموزش روش‌های نوین مطالعه، مدیریت زمان و افزایش بازدهی تحصیلی.</p>
             <div class="boxes-grid" style="margin-top: 40px;">
                 <div class="box" data-target="success-page">
-                    <div class="box-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
+                    <div class="box-icon"><i class="fas fa-trophy"></i></div>
                     <h3 class="box-title">قبولی‌های دانشگاه</h3>
                     <p class="box-desc">نمونه کارنامه‌های قبولی</p>
                 </div>
-                
                 <div class="box" data-target="plans-page">
-                    <div class="box-icon">
-                        <i class="fas fa-clipboard-list"></i>
-                    </div>
+                    <div class="box-icon"><i class="fas fa-clipboard-list"></i></div>
                     <h3 class="box-title">پلن‌های مشاوره‌ای</h3>
                     <p class="box-desc">طرح‌های سالیانه الماس و طلایی</p>
                 </div>
-                
                 <div class="box" data-target="books-page">
-                    <div class="box-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
+                    <div class="box-icon"><i class="fas fa-book"></i></div>
                     <h3 class="box-title">کتاب‌ها</h3>
                     <p class="box-desc">آثار منتشر شده</p>
                 </div>
             </div>
         </div>
     </div>
-    
+
+    <!-- قبولی‌ها -->
     <div class="inner-page" id="success-page">
-        <button class="back-btn" onclick="goBack()">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-        
+        <button class="back-btn" onclick="goBack()" aria-label="بازگشت"><i class="fas fa-arrow-right"></i></button>
         <div class="container">
             <h2>قبولی‌های دانشگاه</h2>
             <div class="slider-container">
                 <div class="slider" id="success-slider">
-                                        <div class="slide">
-                        <img src="https://github.com/ehsanafsharmanesh/asl/blob/main/images/ax0.webp?raw=true" loading="lazy" alt="محسن شفیع پور" class="slide-img">
-                        <div class="slide-caption">
-                            <p>محسن شفیع پور شهربابکی - رتبه 06 کنکور تجربی - منطقه3</p>
-                        </div>
-                    </div>                       
                     <div class="slide">
-                        <img src="https://github.com/ehsanafsharmanesh/asl/blob/main/images/ax4.webp?raw=true" loading="lazy" alt="معصومه شمس الدین" class="slide-img">
-                        <div class="slide-caption">
-                            <p>معصومه شمس الدین - رتبه 719 کنکور تجربی - پزشکی دانشگاه علوم پزشکی کرمان</p>
-                        </div>
-                    </div> 
-                     <div class="slide">
-                        <img src="https://github.com/ehsanafsharmanesh/asl/blob/main/images/ax6.webp?raw=true" loading="lazy" alt="زهرا مقدمی" class="slide-img">
-                        <div class="slide-caption">
-                            <p>زهرا مقدمی -  کنکور تجربی - پزشکی دانشگاه آزاد واحد تهران</p>
-                        </div>
-                    </div>
-                       <div class="slide">
-                        <img src="https://github.com/ehsanafsharmanesh/asl/blob/main/images/ax5.webp?raw=true" loading="lazy" alt="نازنین ابراهیمی" class="slide-img">
-                        <div class="slide-caption">
-                            <p>نازنین زهرا ابراهیمی - دیپلم تجربی گروه انسانی - روانشناسی دانشگاه تهران</p>
-                        </div>
+                        <img src="https://cdn.jsdelivr.net/gh/ehsanafsharmanesh/asl@main/images/ax0.webp" loading="lazy" decoding="async" alt="محسن شفیع پور" class="slide-img">
+                        <div class="slide-caption"><p>محسن شفیع پور شهربابکی - رتبه 06 کنکور تجربی - منطقه3</p></div>
                     </div>
                     <div class="slide">
-                        <img src="https://github.com/ehsanafsharmanesh/asl/blob/main/images/ax0.webp?raw=true" loading="lazy" alt="احمد رضایی" class="slide-img">
-                        <div class="slide-caption">
-                            <p>احمد رضایی استخروئیه - رتبه 10 کنکور انسانی - حقوق دانشگاه تهران-روزانه</p>
-                        </div>
-                      </div>
-                    <div class="slide">
-                        <img src="https://github.com/ehsanafsharmanesh/asl/blob/main/images/ax3.webp?raw=true" loading="lazy" alt="علیرضا یحیایی" class="slide-img">
-                        <div class="slide-caption">
-                            <p>علیرضا یحیایی - رتبه 700 کنکور ریاضی - هوافضا صنعتی خواجه نصیر تهران-روزانه</p>
-                        </div>
+                        <img src="https://cdn.jsdelivr.net/gh/ehsanafsharmanesh/asl@main/images/ax4.webp" loading="lazy" decoding="async" alt="معصومه شمس الدین" class="slide-img">
+                        <div class="slide-caption"><p>معصومه شمس الدین - رتبه 719 کنکور تجربی - پزشکی دانشگاه علوم پزشکی کرمان</p></div>
                     </div>
                     <div class="slide">
-                        <img src="https://github.com/ehsanafsharmanesh/asl/blob/main/images/ax2.webp?raw=true" loading="lazy" alt="فؤاد نیکزاد" class="slide-img">
-                        <div class="slide-caption">
-                            <p>فؤاد نیکزاد - رتبه 8462 کنکور تجربی - پذیرفته شده پزشکی علوم پزشکی کرمان</p>
-                        </div>
+                        <img src="https://cdn.jsdelivr.net/gh/ehsanafsharmanesh/asl@main/images/ax6.webp" loading="lazy" decoding="async" alt="زهرا مقدمی" class="slide-img">
+                        <div class="slide-caption"><p>زهرا مقدمی - کنکور تجربی - پزشکی دانشگاه آزاد واحد تهران</p></div>
+                    </div>
+                    <div class="slide">
+                        <img src="https://cdn.jsdelivr.net/gh/ehsanafsharmanesh/asl@main/images/ax5.webp" loading="lazy" decoding="async" alt="نازنین ابراهیمی" class="slide-img">
+                        <div class="slide-caption"><p>نازنین زهرا ابراهیمی - دیپلم تجربی گروه انسانی - روانشناسی دانشگاه تهران</p></div>
+                    </div>
+                    <div class="slide">
+                        <img src="https://cdn.jsdelivr.net/gh/ehsanafsharmanesh/asl@main/images/ax0.webp" loading="lazy" decoding="async" alt="احمد رضایی" class="slide-img">
+                        <div class="slide-caption"><p>احمد رضایی استخروئیه - رتبه 10 کنکور انسانی - حقوق دانشگاه تهران-روزانه</p></div>
+                    </div>
+                    <div class="slide">
+                        <img src="https://cdn.jsdelivr.net/gh/ehsanafsharmanesh/asl@main/images/ax3.webp" loading="lazy" decoding="async" alt="علیرضا یحیایی" class="slide-img">
+                        <div class="slide-caption"><p>علیرضا یحیایی - رتبه 700 کنکور ریاضی - هوافضا صنعتی خواجه نصیر تهران-روزانه</p></div>
+                    </div>
+                    <div class="slide">
+                        <img src="https://cdn.jsdelivr.net/gh/ehsanafsharmanesh/asl@main/images/ax2.webp" loading="lazy" decoding="async" alt="فؤاد نیکزاد" class="slide-img">
+                        <div class="slide-caption"><p>فؤاد نیکزاد - رتبه 8462 کنکور تجربی - پذیرفته شده پزشکی علوم پزشکی کرمان</p></div>
                     </div>
                 </div>
-                <button class="slider-nav prev" onclick="prevSlide('success-slider')">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                <button class="slider-nav next" onclick="nextSlide('success-slider')">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
+                <button class="slider-nav prev" onclick="prevSlide('success-slider')" aria-label="قبلی"><i class="fas fa-chevron-right"></i></button>
+                <button class="slider-nav next" onclick="nextSlide('success-slider')" aria-label="بعدی"><i class="fas fa-chevron-left"></i></button>
             </div>
         </div>
     </div>
-    
+
+    <!-- پلن‌ها -->
     <div class="inner-page" id="plans-page">
-        <button class="back-btn" onclick="goBack()">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-        
+        <button class="back-btn" onclick="goBack()" aria-label="بازگشت"><i class="fas fa-arrow-right"></i></button>
         <div class="container">
             <h2>پلن‌های مشاوره‌ای</h2>
-            
             <div class="plans-container">
                 <div class="plan">
                     <h3 class="plan-title">طرح الماس</h3>
@@ -668,7 +709,6 @@
                         <li class="plan-item"><i class="fas fa-check"></i> ارسال و بررسی یک سوال از کنکور به صورت شبانه</li>
                     </ul>
                 </div>
-                
                 <div class="plan">
                     <h3 class="plan-title">طرح طلایی</h3>
                     <ul class="plan-list">
@@ -691,57 +731,41 @@
             </div>
         </div>
     </div>
-    
+
+    <!-- کتاب‌ها -->
     <div class="inner-page" id="books-page">
-    <button class="back-btn" onclick="goBack()">
-        <i class="fas fa-arrow-right"></i>
-    </button>
-    
-    <div class="container">
-        <h2>کتاب‌ها و تآلیفات</h2>
-        <div class="slider-container">
-            <div class="slider" id="books-slider">
-                <!-- اسلاید ۱ -->
-                <div class="slide">
-                    <a href="http://opac.nlai.ir/opac-prod/bibliographic/4703045" target="_blank">
-                        <img src="https://github.com/ehsanafsharmanesh/asl/blob/main/images/ketab1.webp?raw=true" loading="lazy" alt="کتاب گروه درمانی شناختی رفتاری افسردگی" class="slide-img">
-                    </a>
+        <button class="back-btn" onclick="goBack()" aria-label="بازگشت"><i class="fas fa-arrow-right"></i></button>
+        <div class="container">
+            <h2>کتاب‌ها و تآلیفات</h2>
+            <div class="slider-container">
+                <div class="slider" id="books-slider">
+                    <div class="slide">
+                        <a href="http://opac.nlai.ir/opac-prod/bibliographic/4703045" target="_blank" rel="noopener">
+                            <img src="https://cdn.jsdelivr.net/gh/ehsanafsharmanesh/asl@main/images/ketab1.webp" loading="lazy" decoding="async" alt="کتاب گروه درمانی شناختی رفتاری افسردگی" class="slide-img">
+                        </a>
+                    </div>
+                    <div class="slide">
+                        <a href="http://opac.nlai.ir/opac-prod/bibliographic/4689267" target="_blank" rel="noopener">
+                            <img src="https://cdn.jsdelivr.net/gh/ehsanafsharmanesh/asl@main/images/ketab2.webp" loading="lazy" decoding="async" alt="کتاب مذهب شخصیت کمال گرایی" class="slide-img">
+                        </a>
+                    </div>
+                    <div class="slide">
+                        <a href="https://example.com/book-3" target="_blank" rel="noopener">
+                            <img src="https://via.placeholder.com/800x400/e74c3c/ffffff?text=کتاب+تکنیک‌های+تست‌زنی" loading="lazy" decoding="async" alt="کتاب تکنیک‌های تست‌زنی" class="slide-img">
+                        </a>
+                    </div>
                 </div>
-                
-                <!-- اسلاید ۲ -->
-                <div class="slide">
-                    <a href="http://opac.nlai.ir/opac-prod/bibliographic/4689267" target="_blank">
-                        <img src="https://github.com/ehsanafsharmanesh/asl/blob/main/images/ketab2.webp?raw=true" loading="lazy" alt="کتاب مذهب شخصیت کمال گرایی" class="slide-img">
-                    </a>
-                </div>
-                
-                <!-- اسلاید ۳ -->
-                <div class="slide">
-                    <a href="https://example.com/book-3" target="_blank">
-                        <img src="https://via.placeholder.com/800x400/e74c3c/ffffff?text=کتاب+تکنیک‌های+تست‌زنی" loading="lazy" alt="کتاب تکنیک‌های تست‌زنی" class="slide-img">
-                    </a>
-                </div>
+                <button class="slider-nav prev" onclick="prevSlide('books-slider')" aria-label="قبلی"><i class="fas fa-chevron-right"></i></button>
+                <button class="slider-nav next" onclick="nextSlide('books-slider')" aria-label="بعدی"><i class="fas fa-chevron-left"></i></button>
             </div>
-            
-            <!-- دکمه‌های ناوبری (داخل slider-container) -->
-            <button class="slider-nav prev" onclick="prevSlide('books-slider')">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            <button class="slider-nav next" onclick="nextSlide('books-slider')">
-                <i class="fas fa-chevron-left"></i>
-            </button>
         </div>
     </div>
-</div>
-    
+
+    <!-- فضای مجازی -->
     <div class="inner-page" id="social-page">
-        <button class="back-btn" onclick="goBack()">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-        
+        <button class="back-btn" onclick="goBack()" aria-label="بازگشت"><i class="fas fa-arrow-right"></i></button>
         <div class="container">
             <h2>فضای مجازی</h2>
-            
             <div class="slider-container">
                 <div class="slider" id="social-slider">
                     <div class="slide">
@@ -749,7 +773,7 @@
                             <i class="fab fa-instagram slide-icon" style="color: #E1306C;"></i>
                             <h3 class="slide-title">اینستاگرام</h3>
                             <p class="slide-handle">@ehsan_afsharmanesh</p>
-                            <a href="https://www.instagram.com/ehsan_afsharmanesh" target="_blank" class="contact-btn" style="background: #E1306C; display: inline-flex; padding: 10px 20px;">
+                            <a href="https://www.instagram.com/ehsan_afsharmanesh" target="_blank" rel="noopener" class="contact-btn" style="background: #E1306C; padding: 10px 20px;">
                                 <i class="fab fa-instagram"></i> مشاهده صفحه
                             </a>
                         </div>
@@ -759,7 +783,7 @@
                             <i class="fab fa-whatsapp slide-icon" style="color: #25D366;"></i>
                             <h3 class="slide-title">واتساپ</h3>
                             <p class="slide-handle">09131467038</p>
-                            <a href="https://wa.me/989131467038" target="_blank" class="contact-btn" style="background: #25D366; display: inline-flex; padding: 10px 20px;">
+                            <a href="https://wa.me/989131467038" target="_blank" rel="noopener" class="contact-btn" style="background: #25D366; padding: 10px 20px;">
                                 <i class="fab fa-whatsapp"></i> ارسال پیام
                             </a>
                         </div>
@@ -769,7 +793,7 @@
                             <i class="fab fa-telegram slide-icon" style="color: #0088cc;"></i>
                             <h3 class="slide-title">تلگرام</h3>
                             <p class="slide-handle">09131467038</p>
-                            <a href="https://t.me/09131467038" target="_blank" class="contact-btn" style="background: #0088cc; display: inline-flex; padding: 10px 20px;">
+                            <a href="https://t.me/09131467038" target="_blank" rel="noopener" class="contact-btn" style="background: #0088cc; padding: 10px 20px;">
                                 <i class="fab fa-telegram"></i> ارسال پیام
                             </a>
                         </div>
@@ -779,246 +803,301 @@
                             <i class="fas fa-graduation-cap slide-icon" style="color: #4CAF50;"></i>
                             <h3 class="slide-title">شاد</h3>
                             <p class="slide-handle">اپلیکیشن شاد</p>
-                            <a href="https://shad.ir/ehsanafsharmanesh" class="contact-btn" style="background: #4CAF50; display: inline-flex; padding: 10px 20px;">
+                            <a href="https://shad.ir/ehsanafsharmanesh" class="contact-btn" style="background: #4CAF50; padding: 10px 20px;">
                                 <i class="fas fa-external-link-alt"></i> ورود به شاد
                             </a>
                         </div>
                     </div>
                 </div>
-                <button class="slider-nav prev" onclick="prevSlide('social-slider')">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                <button class="slider-nav next" onclick="nextSlide('social-slider')">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
+                <button class="slider-nav prev" onclick="prevSlide('social-slider')" aria-label="قبلی"><i class="fas fa-chevron-right"></i></button>
+                <button class="slider-nav next" onclick="nextSlide('social-slider')" aria-label="بعدی"><i class="fas fa-chevron-left"></i></button>
             </div>
-            
+
             <div class="social-grid">
-                <a href="https://www.instagram.com/ehsan_afsharmanesh" target="_blank" class="social-item">
+                <a href="https://www.instagram.com/ehsan_afsharmanesh" target="_blank" rel="noopener" class="social-item">
                     <i class="fab fa-instagram social-icon" style="color: #E1306C;"></i>
                     <div class="social-name">اینستاگرام</div>
                 </a>
-                
-                <a href="https://wa.me/989131467038" target="_blank" class="social-item">
+                <a href="https://wa.me/989131467038" target="_blank" rel="noopener" class="social-item">
                     <i class="fab fa-whatsapp social-icon" style="color: #25D366;"></i>
                     <div class="social-name">واتساپ</div>
                 </a>
-                
-                <a href="https://t.me/09131467038" target="_blank" class="social-item">
+                <a href="https://t.me/09131467038" target="_blank" rel="noopener" class="social-item">
                     <i class="fab fa-telegram social-icon" style="color: #0088cc;"></i>
                     <div class="social-name">تلگرام</div>
                 </a>
-                
                 <a href="#" class="social-item">
                     <i class="fas fa-graduation-cap social-icon" style="color: #4CAF50;"></i>
                     <div class="social-name">شاد</div>
                 </a>
-                
-                <a href="https://taa24.ir/" target="_blank" class="social-item">
+                <a href="https://taa24.ir/" target="_blank" rel="noopener" class="social-item">
                     <i class="fas fa-globe social-icon" style="color: #FF9800;"></i>
                     <div class="social-name">وبسایت آزمون</div>
                 </a>
-                
-                <a href="https://www.reddit.com/user/drehsanafshar/" target="_blank" class="social-item">
+                <a href="https://www.reddit.com/user/drehsanafshar/" target="_blank" rel="noopener" class="social-item">
                     <i class="fas fa-blog social-icon" style="color: #9C27B0;"></i>
                     <div class="social-name">reddit</div>
                 </a>
             </div>
         </div>
     </div>
-    
+
+    <!-- نوبت -->
     <div class="inner-page" id="appointment-page">
-        <button class="back-btn" onclick="goBack()">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-        
+        <button class="back-btn" onclick="goBack()" aria-label="بازگشت"><i class="fas fa-arrow-right"></i></button>
         <div class="container">
             <h2>دریافت نوبت اینترنتی</h2>
             <p style="text-align: center; margin: 30px 0;">برای رزرو نوبت مشاوره، لطفاً بر روی دکمه زیر کلیک کنید تا به پلتفرم رزرو نوبت هدایت شوید.</p>
-            
             <div style="text-align: center; margin-top: 40px;">
-                <a href="https://doctoreto.com/doctor/dr-ehsan-afshar-manesh/MNzpxM" target="_blank" class="contact-btn" style="background: var(--primary-color); display: inline-flex;">
+                <a href="https://doctoreto.com/doctor/dr-ehsan-afshar-manesh/MNzpxM" target="_blank" rel="noopener" class="contact-btn">
                     <i class="fas fa-calendar-check"></i> رزرو نوبت اینترنتی
                 </a>
             </div>
         </div>
     </div>
-    
+
+    <!-- تماس -->
     <div class="inner-page" id="contact-page">
-        <button class="back-btn" onclick="goBack()">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-        
+        <button class="back-btn" onclick="goBack()" aria-label="بازگشت"><i class="fas fa-arrow-right"></i></button>
         <div class="container">
             <h2>تماس مستقیم</h2>
             <p style="text-align: center; margin: 30px 0;">برای رزرو وقت مشاوره از طریق تماس تلفنی یا ارسال پیامک، از گزینه‌های زیر استفاده کنید.</p>
-            
             <div class="contact-options">
-                <a href="tel:09131467038" class="contact-btn call-btn">
-                    <i class="fas fa-phone-alt"></i> تماس تلفنی
-                </a>
-                
-                <a href="sms:09131467038" class="contact-btn sms-btn">
-                    <i class="fas fa-sms"></i> ارسال پیامک
-                </a>
+                <a href="tel:09131467038" class="contact-btn call-btn"><i class="fas fa-phone-alt"></i> تماس تلفنی</a>
+                <a href="sms:09131467038" class="contact-btn sms-btn"><i class="fas fa-sms"></i> ارسال پیامک</a>
             </div>
         </div>
     </div>
-    
+
+    <!-- نقشه -->
     <div class="inner-page" id="maps-page">
-        <button class="back-btn" onclick="goBack()">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-        
+        <button class="back-btn" onclick="goBack()" aria-label="بازگشت"><i class="fas fa-arrow-right"></i></button>
         <div class="container">
             <h2>مسیریابی برای مراجعه حضوری</h2>
             <p style="text-align: center; margin: 30px 0;">برای مشاهده موقعیت روی نقشه و مسیریابی، بر روی دکمه زیر کلیک کنید.</p>
-            
             <div style="text-align: center; margin-top: 40px;">
-                <a href="https://maps.app.goo.gl/86Wg2q2DHRgtU4Y8A" target="_blank" class="contact-btn" style="background: #34A853; display: inline-flex;">
+                <a href="https://maps.app.goo.gl/86Wg2q2DHRgtU4Y8A" target="_blank" rel="noopener" class="contact-btn" style="background: #34A853;">
                     <i class="fas fa-map-marker-alt"></i> مسیریابی گوگل
                 </a>
             </div>
         </div>
     </div>
-    
+
+    <!-- مراحل انتخاب رشته -->
     <div class="inner-page" id="service2-page">
-        <button class="back-btn" onclick="goBack()">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-        
+        <button class="back-btn" onclick="goBack()" aria-label="بازگشت"><i class="fas fa-arrow-right"></i></button>
         <div class="container">
-            <h2>خدمات ویژه ۲</h2>
-            <p style="text-align: center; margin: 30px 0;">این بخش برای خدمات ویژه در نظر گرفته شده است. محتوای این بخش را می‌توانید در آینده تغییر دهید.</p>
+            <div class="major-header">
+                <h2>مراحل انتخاب رشته</h2>
+                <p>روند ۹ مرحله‌ای انتخاب رشته کنکور سراسری و آزاد</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"><span class="timeline-number">۱</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-book-open"></i></div>
+                        <h3>آموزش اصول و قوانین انتخاب رشته</h3>
+                        <p>آشنایی کامل با قوانین کنکور سراسری و دانشگاه آزاد، سهمیه‌ها، بومی‌گزینی و ظرفیت‌ها.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"><span class="timeline-number">۲</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-id-card"></i></div>
+                        <h3>تشکیل پروفایل داوطلبی</h3>
+                        <h4 class="timeline-subtitle">تکمیل پرسش‌نامه شخصیت و علاقه</h4>
+                        <p>ثبت اطلاعات تحصیلی و شناخت دقیق توانمندی‌ها، علاقه و شخصیت داوطلب برای انتخاب رشته متناسب.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"><span class="timeline-number">۳</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h3>معرفی رشته‌های دانشگاهی</h3>
+                        <p>بررسی تخصصی رشته‌ها، بازار کار، آینده شغلی و تناسب آن‌ها با علاقه و رتبه داوطلب.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"><span class="timeline-number">۴</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-laptop-code"></i></div>
+                        <h3>آموزش انتخاب رشته و دسته‌بندی</h3>
+                        <p>آموزش روش‌های صحیح انتخاب رشته و دسته‌بندی اولویت‌ها بر اساس رتبه و علاقه.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"><span class="timeline-number">۵</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-comments"></i></div>
+                        <h3>جلسه مشاوره و تنظیم کد رشته‌ها</h3>
+                        <p>جلسه حضوری یا آنلاین برای بررسی اولیه کد رشته‌ها و تنظیم لیست اولیه.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item timeline-special">
+                    <div class="timeline-marker"><span class="timeline-number">۶</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-magic"></i></div>
+                        <h3>تکمیل فرم انتخاب رشته هوشمند</h3>
+                        <p>فرم انتخاب رشته با قابلیت <strong>جابه‌جایی لحظه‌ای ردیف‌ها</strong> توسط مشاور و داوطلب به‌صورت هم‌زمان و آنلاین.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"><span class="timeline-number">۷</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-user-friends"></i></div>
+                        <h3>جلسه مشاوره فردی ۲</h3>
+                        <p>بررسی نهایی فرم، رفع اشکال و اطمینان از صحت انتخاب‌ها.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"><span class="timeline-number">۸</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>کنترل نهایی</h3>
+                        <p>بازبینی نهایی فرم انتخاب رشته قبل از تایید و ارسال.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"><span class="timeline-number">۹</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-check-double"></i></div>
+                        <h3>تحویل و پیگیری نتیجه</h3>
+                        <p>پشتیبانی تا اعلام نتایج و راهنمایی در مراحل بعدی.</p>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- دکمه شناور پیامک -->
+        <a href="sms:09131467038?body=من%20داوطلب%20انتخاب%20رشته%20هستم" class="floating-sms" aria-label="رزرو وقت انتخاب رشته">
+            <i class="fas fa-sms"></i>
+            <span>رزرو وقت انتخاب رشته</span>
+        </a>
     </div>
 
     <script>
-// لودینگ زمان‌بندی شده از ۰ تا ۱۰۰
-document.addEventListener('DOMContentLoaded', function() {
-    let progress = 0;
-    const loadingPercent = document.getElementById('loading-percent');
-    const loading = document.getElementById('loading');
-    const mainPage = document.getElementById('main-page');
+        // ===== لودر =====
+        const loading = document.getElementById('loading');
+        const mainPage = document.getElementById('main-page');
+        const loadingText = loading.querySelector('.loading-text');
 
-    // هر 25 میلی‌ثانیه، 1 درصد به شمارنده اضافه می‌شود
-    const fakeLoaderInterval = setInterval(() => {
-        progress += 1;
-        loadingPercent.textContent = `${progress}٪`;
-
-        // وقتی به ۱۰۰ رسید، متوقف شده و صفحه را باز می‌کند
-        if (progress >= 100) {
-            clearInterval(fakeLoaderInterval);
-            
+        function hideLoader() {
+            loading.classList.add('hidden');
             setTimeout(() => {
-                loading.style.opacity = '0';
-                setTimeout(() => {
-                    loading.style.display = 'none';
-                    if (!mainPage.classList.contains('active')) {
-                        mainPage.classList.add('active');
-                        startFollowerCount();
-                        resetSliders();
-                    }
-                }, 500); // زمان انیمیشن محو شدن لودینگ
-            }, 200); // مکث کوتاه روی عدد 100
+                loading.style.display = 'none';
+                if (!mainPage.classList.contains('active')) {
+                    mainPage.classList.add('active');
+                    startFollowerCount();
+                    resetSliders();
+                }
+            }, 400);
         }
-    }, 10); // این عدد سرعت شمارش را تعیین می‌کند
-});
-        
+
+        // پیشرفت واقعی بر اساس بارگذاری تصاویر
+        window.addEventListener('load', () => {
+            loadingText.textContent = '١٠٠';
+            setTimeout(hideLoader, 300);
+        });
+
+        // فالبک: اگر ظرف ۳ ثانیه load نشد، به هر حال نشان بده
+        setTimeout(() => {
+            if (loading.style.display !== 'none') hideLoader();
+        }, 3000);
+
         // شمارش فالوورها
         function startFollowerCount() {
             let count = 0;
             const followerCount = document.getElementById('follower-count');
             const target = 10;
-            
             const interval = setInterval(() => {
                 count++;
                 followerCount.textContent = count + 'K';
-                
-                if (count >= target) {
-                    clearInterval(interval);
-                }
-            }, 100); 
+                if (count >= target) clearInterval(interval);
+            }, 120);
         }
-        
-        // مدیریت نمایش صفحات
+
+        // ===== مدیریت صفحات =====
         document.querySelectorAll('.box').forEach(box => {
-            box.addEventListener('click', function() {
+            box.addEventListener('click', function () {
                 const targetId = this.getAttribute('data-target');
-                showPage(targetId);
+                if (targetId) showPage(targetId);
             });
         });
-        
+
         function showPage(pageId) {
-            // مخفی کردن همه صفحات
             document.querySelectorAll('.inner-page, .main-page').forEach(page => {
                 page.classList.remove('active');
             });
-            
-            // نمایش صفحه مورد نظر
-            document.getElementById(pageId).classList.add('active');
-            
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
+                target.scrollTop = 0;
+            }
             resetSliders();
         }
-        
+
         function goBack() {
-            // مخفی کردن همه صفحات داخلی
             document.querySelectorAll('.inner-page').forEach(page => {
                 page.classList.remove('active');
             });
-            
-            // نمایش صفحه اصلی
             document.getElementById('main-page').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'instant' });
         }
-        
-        // مدیریت اسلایدرهای لوپ (چرخشی) - اصلاح نهایی برای RTL
+
+        // ===== اسلایدرها =====
         let currentSlides = {};
-        
+
         function resetSliders() {
             document.querySelectorAll('.slider').forEach(slider => {
                 currentSlides[slider.id] = 0;
-                slider.style.transform = `translateX(0)`;
+                slider.style.transform = 'translateX(0)';
             });
         }
-        
+
         function nextSlide(sliderId) {
             const slider = document.getElementById(sliderId);
             if (!slider) return;
-            const slides = slider.querySelectorAll('.slide');
-            const totalSlides = slides.length;
-            
-            let current = currentSlides[sliderId] === undefined ? 0 : currentSlides[sliderId];
-            
-            current = (current + 1) % totalSlides;
+            const total = slider.querySelectorAll('.slide').length;
+            let current = currentSlides[sliderId] || 0;
+            current = (current + 1) % total;
             currentSlides[sliderId] = current;
-            
-            // در حالت RTL برای رفتن به اسلاید بعدی (چپ) مقدار حرکت X باید مثبت باشد
             slider.style.transform = `translateX(${current * 100}%)`;
         }
-        
+
         function prevSlide(sliderId) {
             const slider = document.getElementById(sliderId);
             if (!slider) return;
-            const slides = slider.querySelectorAll('.slide');
-            const totalSlides = slides.length;
-            
-            let current = currentSlides[sliderId] === undefined ? 0 : currentSlides[sliderId];
-            
-            current = (current - 1 + totalSlides) % totalSlides; 
+            const total = slider.querySelectorAll('.slide').length;
+            let current = currentSlides[sliderId] || 0;
+            current = (current - 1 + total) % total;
             currentSlides[sliderId] = current;
-            
-            // در حالت RTL برای رفتن به اسلاید قبلی (راست) مقدار حرکت X باید مثبت باشد
             slider.style.transform = `translateX(${current * 100}%)`;
         }
-        
-        // توابع برای تغییر عکس‌ها
-        function changeCoverImage(url) {
-            document.getElementById('cover-img').src = url;
-        }
-        
-        function changeProfileImage(url) {
-            document.getElementById('profile-img').src = url;
-        }
+
+        // ===== انیمیشن تایم‌لاین با IntersectionObserver (سبک) =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.timeline-item').forEach(item => observer.observe(item));
+
+        // ===== توابع تغییر عکس =====
+        function changeCoverImage(url) { document.getElementById('cover-img').src = url; }
+        function changeProfileImage(url) { document.getElementById('profile-img').src = url; }
     </script>
 </body>
 </html>
