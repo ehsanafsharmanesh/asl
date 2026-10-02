@@ -1156,43 +1156,45 @@
 
     <script>
         // ===== لودینگ ۰ تا ۱۰۰ با صبر تا اتمام واقعی load =====
-        document.addEventListener('DOMContentLoaded', function() {
-            let progress = 0;
-            let pageLoaded = false;
-            const loadingPercent = document.getElementById('loading-percent');
-            const loading = document.getElementById('loading');
-            const mainPage = document.getElementById('main-page');
+document.addEventListener('DOMContentLoaded', function() {
+    let progress = 0;
+    let pageLoaded = false;
+    let maxWaitReached = false;
+    const loadingPercent = document.getElementById('loading-percent');
+    const loading = document.getElementById('loading');
+    const mainPage = document.getElementById('main-page');
 
-            // وقتی window کاملاً لود شد، پرچم را بالا ببر
-            window.addEventListener('load', () => { pageLoaded = true; });
+    window.addEventListener('load', () => { pageLoaded = true; });
 
-            const fakeLoaderInterval = setInterval(() => {
-                progress += 1;
+    // فالبک: اگر بعد از ۲.۵ ثانیه هنوز load نشده، اجازه بده بره ۱۰۰
+    setTimeout(() => { maxWaitReached = true; }, 2500);
 
-                // وقتی به ۹۵ رسید، سرعت را کم کن تا منتظر load بماند
-                if (progress >= 95 && !pageLoaded) {
-                    progress = 95;
-                }
+    const fakeLoaderInterval = setInterval(() => {
+        // فقط اگر pageLoaded یا maxWaitReached باشه، از ۹۵ رد شو
+        if (progress >= 95 && !pageLoaded && !maxWaitReached) {
+            progress = 95;
+        } else {
+            progress += 1;
+        }
 
-                loadingPercent.textContent = `${progress}٪`;
+        loadingPercent.textContent = `${progress}٪`;
 
-                if (progress >= 100) {
-                    clearInterval(fakeLoaderInterval);
-
-                    setTimeout(() => {
-                        loading.style.opacity = '0';
-                        setTimeout(() => {
-                            loading.style.display = 'none';
-                            if (!mainPage.classList.contains('active')) {
-                                mainPage.classList.add('active');
-                                startFollowerCount();
-                                resetSliders();
-                            }
-                        }, 500);
-                    }, 200);
-                }
-            }, 25);
-        });
+        if (progress >= 100) {
+            clearInterval(fakeLoaderInterval);
+            setTimeout(() => {
+                loading.style.opacity = '0';
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                    if (!mainPage.classList.contains('active')) {
+                        mainPage.classList.add('active');
+                        startFollowerCount();
+                        resetSliders();
+                    }
+                }, 500);
+            }, 200);
+        }
+    }, 25);
+});
         
         // شمارش فالوورها
         function startFollowerCount() {
