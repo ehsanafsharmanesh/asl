@@ -82,7 +82,7 @@
             min-height: 100vh;
             display: none; 
             flex-direction: column; 
-            padding: 20px 0; 
+            padding: 0 0 20px; 
             position: relative;
         }
 
@@ -587,6 +587,9 @@
         }
 
 @media (max-width: 768px) {
+    .main-page {
+        padding: 0 0 8px;
+    }
     .container {
         padding: 0 12px;
     }
@@ -610,7 +613,6 @@
         min-width: 90%;
     }
 }
-
         @media (max-width: 600px) {
             .timeline::before { right: 18px; }
             .timeline-item { padding-right: 55px; }
