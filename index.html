@@ -173,13 +173,18 @@
             flex: 1;
         }
         
-        .profile-name {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 5px;
+        /* ✅ اصلاح ساختاری: h1 و instagram-followers دیگر داخل هم نیستند */
+        .profile-name-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .profile-name {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 0;
         }
         
         .profile-title {
@@ -586,33 +591,33 @@
             50% { box-shadow: 0 6px 30px rgba(255, 152, 0, 0.85); }
         }
 
-@media (max-width: 768px) {
-    .main-page {
-        padding: 0 0 8px;
-    }
-    .container {
-        padding: 0 12px;
-    }
-    .boxes-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .box {
-        padding: 12px 10px;
-    }
-    .profile-name {
-        font-size: 1.5rem;
-    }
-    .loading-text {
-        font-size: 5rem;
-    }
-    .contact-options {
-        flex-direction: column;
-        align-items: center;
-    }
-    .plan {
-        min-width: 90%;
-    }
-}
+        @media (max-width: 768px) {
+            .main-page {
+                padding: 0 0 8px;
+            }
+            .container {
+                padding: 0 12px;
+            }
+            .boxes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .box {
+                padding: 12px 10px;
+            }
+            .profile-name {
+                font-size: 1.5rem;
+            }
+            .loading-text {
+                font-size: 5rem;
+            }
+            .contact-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            .plan {
+                min-width: 90%;
+            }
+        }
         @media (max-width: 600px) {
             .timeline::before { right: 18px; }
             .timeline-item { padding-right: 55px; }
@@ -652,13 +657,14 @@
             <div class="profile-info">
                 <img src="https://statics.doctoreto.com/preset:sharp/resize:fill:300:300:0/gravity:sm/plain/s3://drto/avatar/doctor/2023/11/KNSIMdgWQx1U7vVWn6pvCZ4uQuFe0JBn5GbHTP1i.jpg" alt="احسان افشارمنش" class="profile-img" id="profile-img" width="120" height="120" decoding="async">
                 <div class="profile-text">
-                    <h1 class="profile-name">
-                        احسان افشارمنش
+                    <!-- ✅ اصلاح: h1 و instagram-followers به صورت sibling در یک wrapper قرار گرفتند -->
+                    <div class="profile-name-row">
+                        <h1 class="profile-name">احسان افشارمنش</h1>
                         <div class="instagram-followers">
                             <div class="follower-count" id="follower-count">۰</div>
                             <div class="follower-text">Insta Followers</div>
                         </div>
-                    </h1>
+                    </div>
                     <p class="profile-title">مشاور تحصیلی و کنکور</p>
                 </div>
             </div>
@@ -769,7 +775,8 @@
             <h2>قبولی‌های دانشگاه</h2>
 
             <div class="boxes-grid" style="margin-top: 20px; margin-bottom: 30px;">
-                <div class="box" data-target="success-page">
+                <!-- ✅ اصلاح: data-target حذف شد و pointer غیرفعال شد (قبلاً به خودش لینک بود) -->
+                <div class="box" style="cursor: default;">
                     <div class="box-icon">
                         <i class="fas fa-file-alt"></i>
                     </div>
@@ -853,37 +860,38 @@
                 <p>اسامی، رتبه در سهمیه و رشته‌محل قبولی</p>
             </div>
 
+            <!-- ✅ اصلاح: فقط یک div.timeline وجود دارد (قبلاً دوتا بود و تودرتو می‌شد) -->
+            <!-- ✅ اصلاح: شماره‌ها از ۱ تا ۴۲ پیوسته شدند (قبلاً ۱،۱،۴،۲،۳،۴،... بودند) -->
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-marker"><span class="timeline-number">۱</span></div>
                     <div class="timeline-content">
-                        <h3>رضا زین‌الدینی </h3>
+                        <h3>رضا زین‌الدینی</h3>
                         <p>رتبه در سهمیه: 3979(منطقه3)</p>
                         <p>مهندسي وعلم مواد|دانشگاه شهيدباهنركرمان | روزانه</p>
                     </div>
                 </div>
 
-                            <div class="timeline">
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲</span></div>
                     <div class="timeline-content">
-                        <h3>علی رجایی </h3>
+                        <h3>علی رجایی</h3>
                         <p>رتبه در سهمیه: 1726(منطقه2)</p>
                         <p>مهندسي برق |دانشگاه اصفهان | روزانه</p>
                     </div>
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۴</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳</span></div>
                     <div class="timeline-content">
-                        <h3>باران حکیمی </h3>
+                        <h3>باران حکیمی</h3>
                         <p>رتبه در سهمیه منطقه2: 500</p>
                         <p>حقوق|دانشگاه شیراز|روزانه</p>
                     </div>
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۴</span></div>
                     <div class="timeline-content">
                         <h3>زهرا تیموری</h3>
                         <p>رتبه در سهمیه منطقه 3: 22884</p>
@@ -892,43 +900,43 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۵</span></div>
                     <div class="timeline-content">
-                        <h3>علیرضا یحیایی </h3>
+                        <h3>علیرضا یحیایی</h3>
                         <p>رتبه در سهمیه منطقه3: 794</p>
                         <p>مهندسي هوافضا|دانشگاه صنعتي خواجه نصيرالدين طوسي -تهران | روزانه</p>
                     </div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۴</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۶</span></div>
                     <div class="timeline-content">
-                        <h3>فاران عطاپور </h3>
+                        <h3>فاران عطاپور</h3>
                         <p>رتبه در سهمیه: 3499</p>
                         <p>حقوق|دانشگاه ولي عصر رفسنجان|روزانه</p>
                     </div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۵</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۷</span></div>
                     <div class="timeline-content">
-                        <h3>ف زنگی‌آبادی </h3>
+                        <h3>ف زنگی‌آبادی</h3>
                         <p>رتبه در سهمیه منطقه2 تجربی: 103870</p>
                         <p>مهندسي عمران|موسسه غيرانتفاعي بعثت -كرمان | غيرانتفاعي</p>
                     </div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۶</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۸</span></div>
                     <div class="timeline-content">
-                        <h3>فؤاد نیکزاد </h3>
+                        <h3>فؤاد نیکزاد</h3>
                         <p>رتبه در سهمیه منطقه2: 8462</p>
                         <p>دكتري عمومي پزشكي|دانشگاه علوم پزشكي كرمان | محروم</p>
                     </div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۷</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۹</span></div>
                     <div class="timeline-content">
                         <h3>مائده عامری</h3>
                         <p>رتبه در سهمیه منطقه2: 18009</p>
@@ -937,7 +945,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۸</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۱۰</span></div>
                     <div class="timeline-content">
                         <h3>حسین موسوی</h3>
                         <p>رتبه در سهمیه: ۱۵۰۰</p>
@@ -946,7 +954,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۹</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۱۱</span></div>
                     <div class="timeline-content">
                         <h3>م شمس‌الدین</h3>
                         <p>رتبه در سهمیه نهایی: 719</p>
@@ -955,7 +963,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱۰</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۱۲</span></div>
                     <div class="timeline-content">
                         <h3>ز مقدمی</h3>
                         <p>رتبه در سهمیه نهایی: 1952</p>
@@ -964,7 +972,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱۱</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۱۳</span></div>
                     <div class="timeline-content">
                         <h3>ز ابراهیمی</h3>
                         <p>رتبه در سهمیه نهایی: 14078</p>
@@ -973,7 +981,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱۲</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۱۴</span></div>
                     <div class="timeline-content">
                         <h3>هنگامه شمس‌الدین</h3>
                         <p>رتبه در سهمیه منطقه2: 2319</p>
@@ -982,7 +990,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱۳</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۱۵</span></div>
                     <div class="timeline-content">
                         <h3>محمدصالح ملک‌شاهی</h3>
                         <p>رتبه در سهمیه منطقه2: 20991</p>
@@ -991,7 +999,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱۴</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۱۶</span></div>
                     <div class="timeline-content">
                         <h3>محمدحسین شهابی‌نیا</h3>
                         <p>رتبه در سهمیه منطقه3: 8159</p>
@@ -1000,7 +1008,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱۵</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۱۷</span></div>
                     <div class="timeline-content">
                         <h3>آرمان افشاری‌پور</h3>
                         <p>رتبه در سهمیه نهایی: 2003</p>
@@ -1009,7 +1017,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱۶</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۱۸</span></div>
                     <div class="timeline-content">
                         <h3>س سدیر</h3>
                         <p>رتبه در سهمیه منطقه3: 1732</p>
@@ -1018,7 +1026,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱۷</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۱۹</span></div>
                     <div class="timeline-content">
                         <h3>محمدامین حیدری پور</h3>
                         <p>رتبه در سهمیه منطقه2: 33503</p>
@@ -1027,7 +1035,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱۸</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲۰</span></div>
                     <div class="timeline-content">
                         <h3>آیدا نجفی</h3>
                         <p>رتبه در سهمیه منطقه2: 37430</p>
@@ -1036,7 +1044,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۱۹</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲۱</span></div>
                     <div class="timeline-content">
                         <h3>بیتا بهرام‌پور</h3>
                         <p>رتبه در سهمیه منطقه2: 6861</p>
@@ -1045,7 +1053,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲۰</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲۲</span></div>
                     <div class="timeline-content">
                         <h3>سولماز حیدری‌پور افشار</h3>
                         <p>رتبه کل در سهمیه نهایی5: 10629</p>
@@ -1054,7 +1062,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲۱</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲۳</span></div>
                     <div class="timeline-content">
                         <h3>مینا سلطانی</h3>
                         <p>رتبه در سهمیه: ۵۵۰</p>
@@ -1063,7 +1071,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲۲</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲۴</span></div>
                     <div class="timeline-content">
                         <h3>آرش پناهی</h3>
                         <p>رتبه در سهمیه: ۷۸۰۰</p>
@@ -1072,7 +1080,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲۳</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲۵</span></div>
                     <div class="timeline-content">
                         <h3>سمیرا فتحی</h3>
                         <p>رتبه در سهمیه: ۱۹۰۰</p>
@@ -1081,7 +1089,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲۴</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲۶</span></div>
                     <div class="timeline-content">
                         <h3>حامد ولی‌زاده</h3>
                         <p>رتبه در سهمیه: ۳۱۰۰</p>
@@ -1090,7 +1098,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲۵</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲۷</span></div>
                     <div class="timeline-content">
                         <h3>لیلا احمدی</h3>
                         <p>رتبه در سهمیه: ۱۰۰۰</p>
@@ -1099,7 +1107,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲۶</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲۸</span></div>
                     <div class="timeline-content">
                         <h3>فرزاد رستمی</h3>
                         <p>رتبه در سهمیه: ۹۵۰۰</p>
@@ -1108,7 +1116,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲۷</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۲۹</span></div>
                     <div class="timeline-content">
                         <h3>هانیه کمالی</h3>
                         <p>رتبه در سهمیه: ۲۱۰۰</p>
@@ -1117,7 +1125,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲۸</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳۰</span></div>
                     <div class="timeline-content">
                         <h3>پیمان اسدی</h3>
                         <p>رتبه در سهمیه: ۴۸۰۰</p>
@@ -1126,7 +1134,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۲۹</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳۱</span></div>
                     <div class="timeline-content">
                         <h3>رؤیا محمدی</h3>
                         <p>رتبه در سهمیه: ۷۰۰</p>
@@ -1135,7 +1143,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳۰</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳۲</span></div>
                     <div class="timeline-content">
                         <h3>کامران شاهی</h3>
                         <p>رتبه در سهمیه: ۵۸۰۰</p>
@@ -1144,7 +1152,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳۱</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳۳</span></div>
                     <div class="timeline-content">
                         <h3>آیدا نوروزی</h3>
                         <p>رتبه در سهمیه: ۱۶۰۰</p>
@@ -1153,16 +1161,16 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳۲</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳۴</span></div>
                     <div class="timeline-content">
-                        <h3>میلad ترابی</h3>
+                        <h3>میلاد ترابی</h3>
                         <p>رتبه در سهمیه: ۳۸۰۰</p>
                         <p>مهندسی کامپیوتر، علم و صنعت</p>
                     </div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳۳</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳۵</span></div>
                     <div class="timeline-content">
                         <h3>شقایق بهرامی</h3>
                         <p>رتبه در سهمیه: ۱۳۰۰</p>
@@ -1171,7 +1179,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳۴</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳۶</span></div>
                     <div class="timeline-content">
                         <h3>نوید سعیدی</h3>
                         <p>رتبه در سهمیه: ۷۲۰۰</p>
@@ -1180,7 +1188,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳۵</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳۷</span></div>
                     <div class="timeline-content">
                         <h3>غزل امینی</h3>
                         <p>رتبه در سهمیه: ۲۴۰۰</p>
@@ -1189,7 +1197,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳۶</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳۸</span></div>
                     <div class="timeline-content">
                         <h3>سینا مرادپور</h3>
                         <p>رتبه در سهمیه: ۵۲۰۰</p>
@@ -1198,7 +1206,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳۷</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۳۹</span></div>
                     <div class="timeline-content">
                         <h3>بهاره نجفی</h3>
                         <p>رتبه در سهمیه: ۸۵۰</p>
@@ -1207,7 +1215,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳۸</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۴۰</span></div>
                     <div class="timeline-content">
                         <h3>آرمین دهقان</h3>
                         <p>رتبه در سهمیه: ۶۸۰۰</p>
@@ -1216,7 +1224,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۳۹</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۴۱</span></div>
                     <div class="timeline-content">
                         <h3>نازنین قاسمی</h3>
                         <p>رتبه در سهمیه: ۲۰۰۰</p>
@@ -1225,7 +1233,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-marker"><span class="timeline-number">۴۰</span></div>
+                    <div class="timeline-marker"><span class="timeline-number">۴۲</span></div>
                     <div class="timeline-content">
                         <h3>پوریا رحمانی</h3>
                         <p>رتبه در سهمیه: ۴۰۰</p>
