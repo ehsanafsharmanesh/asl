@@ -591,6 +591,88 @@
             50% { box-shadow: 0 6px 30px rgba(255, 152, 0, 0.85); }
         }
 
+        /* ==================== ✅ NEW: کارگاه‌ها و همایش‌ها ==================== */
+        .box.workshop-box::before {
+            background: conic-gradient(
+                transparent 0%, 
+                transparent 45%, 
+                #f39c12 50%, 
+                transparent 55%, 
+                transparent 100%
+            );
+        }
+
+        .workshop-panel {
+            max-width: 900px;
+            margin: 0 auto;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.35s ease, margin 0.35s ease;
+        }
+        .workshop-panel.open {
+            max-height: 700px;
+            opacity: 1;
+            margin-top: 20px;
+        }
+        .workshop-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 2px solid #f39c12;
+        }
+        .workshop-link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            padding: 14px 18px;
+            background: #fff9e6;
+            border-radius: 8px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            border: 1px solid #f39c12;
+        }
+        .workshop-link:hover {
+            background: #f39c12;
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4);
+        }
+        .workshop-link i {
+            color: #f39c12;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        .workshop-link:hover i {
+            color: var(--white);
+        }
+        .workshop-link.soon {
+            background: #f0f2f5;
+            color: var(--light-text);
+            border-color: #ddd;
+            cursor: not-allowed;
+            justify-content: center;
+        }
+        .workshop-link.soon:hover {
+            background: #f0f2f5;
+            color: var(--light-text);
+            transform: none;
+            box-shadow: none;
+        }
+        @media (max-width: 600px) {
+            .workshop-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .main-page {
                 padding: 0 0 8px;
@@ -761,6 +843,31 @@
                     </div>
                     <h3 class="box-title">آشنایی بیشتر با احسان افشارمنش</h3>
                     <p class="box-desc">رزومه، سوابق و افتخارات</p>
+                </div>
+
+                <!-- ✅ NEW: باکس کارگاه‌ها و همایش‌ها -->
+                <div class="box workshop-box" id="workshop-toggle">
+                    <div class="box-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="box-title">کارگاه‌ها و همایش‌ها</h3>
+                    <p class="box-desc">مشاهده و دانلود همایش‌ها</p>
+                </div>
+            </div>
+
+            <!-- ✅ NEW: پنل بازشونده لینک‌های کارگاه‌ها -->
+            <div class="workshop-panel" id="workshop-panel">
+                <div class="workshop-grid">
+                    <a href="https://drive.google.com/uc?export=download&id=11_u7kPyucx2vApG8LcraSOU0sEPgIEvS" class="workshop-link">
+                        <i class="fas fa-download"></i>
+                        <span>بخش اول همایش بافت</span>
+                    </a>
+                    <a href="https://drive.google.com/uc?export=download&id=1SCSKPg84r1HfUhF0iSSnsYA5mrdoX74a" class="workshop-link">
+                        <i class="fas fa-download"></i>
+                        <span>بخش دوم همایش بافت</span>
+                    </a>
+                    <div class="workshop-link soon">به زودی</div>
+                    <div class="workshop-link soon">به زودی</div>
                 </div>
             </div>
         </div>
@@ -1837,6 +1944,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         function changeProfileImage(url) {
             document.getElementById('profile-img').src = url;
+        }
+
+        // ✅ NEW: باز/بسته کردن پنل کارگاه‌ها
+        const workshopToggle = document.getElementById('workshop-toggle');
+        const workshopPanel = document.getElementById('workshop-panel');
+        if (workshopToggle && workshopPanel) {
+            workshopToggle.addEventListener('click', function() {
+                workshopPanel.classList.toggle('open');
+            });
         }
     </script>
 </body>
