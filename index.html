@@ -6,7 +6,6 @@
     <meta name="theme-color" content="#1877f2">
     <title>مشاوره تحصیلی | احسان افشارمنش</title>
 
-    <!-- فونت‌ها: ادغام Orbitron در یک درخواست واحد -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -15,7 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* متغیرها */
         :root {
             --primary-color: #1877f2; 
             --secondary-color: #42b72a; 
@@ -29,7 +27,6 @@
             --spin-speed: 5s;
         }
         
-        /* استایل پایه */
         * {
             margin: 0;
             padding: 0;
@@ -56,7 +53,6 @@
             padding: 0 20px;
         }
         
-        /* --- لودینگ و صفحه اصلی --- */
         #loading {
             position: fixed;
             top: 0;
@@ -90,7 +86,6 @@
             display: flex; 
         }
 
-        /* --- CSS برای صفحات داخلی (Inner Pages) --- */
         .inner-page {
             display: none; 
             position: fixed; 
@@ -126,7 +121,6 @@
             transition: var(--transition);
         }
         
-        /* --- بخش پروفایل و کاور --- */
         .profile-header {
             position: relative;
             width: 100%;
@@ -173,7 +167,6 @@
             flex: 1;
         }
         
-        /* ✅ اصلاح ساختاری: h1 و instagram-followers دیگر داخل هم نیستند */
         .profile-name-row {
             display: flex;
             align-items: center;
@@ -212,7 +205,6 @@
             margin-top: 2px;
         }
         
-        /* --- ساختار اصلی باکس‌ها --- */
         .boxes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -222,7 +214,6 @@
             margin: 0 auto;
         }
         
-        /* --- انیمیشن فتیله باروت --- */
         @keyframes border-spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -289,7 +280,6 @@
             z-index: 2; 
         }
 
-        /* --- استایل اسلایدر و تصاویر --- */
         .slide {
             min-width: 100%; 
             position: relative;
@@ -454,9 +444,6 @@
             background: #FF9800; 
         }
 
-        /* ============================================================
-           تایم‌لاین مراحل انتخاب رشته (بخش خدمات ویژه ۲)
-           ============================================================ */
         .major-header {
             text-align: center;
             margin-bottom: 40px;
@@ -564,7 +551,6 @@
         .timeline-special .timeline-icon { background: linear-gradient(135deg, #f39c12, #e67e22); }
         .timeline-special .timeline-content strong { color: #e67e22; }
 
-        /* --- دکمه شناور پیامک (فقط در صفحه خدمات ویژه ۲) --- */
         .floating-sms {
             position: fixed;
             bottom: 25px;
@@ -602,53 +588,38 @@
             );
         }
 
-        .workshop-panel {
-            max-width: 900px;
-            margin: 0 auto;
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transition: max-height 0.5s ease, opacity 0.35s ease, margin 0.35s ease;
-        }
-        .workshop-panel.open {
-            max-height: 700px;
-            opacity: 1;
-            margin-top: 20px;
-        }
         .workshop-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-            padding: 20px;
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            border: 2px solid #f39c12;
+            max-width: 800px;
+            margin: 30px auto 0;
         }
         .workshop-link {
             display: flex;
             align-items: center;
             justify-content: flex-start;
             gap: 10px;
-            padding: 14px 18px;
-            background: #fff9e6;
-            border-radius: 8px;
+            padding: 18px 20px;
+            background: var(--white);
+            border-radius: var(--border-radius);
             color: var(--text-color);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 1rem;
             transition: var(--transition);
-            border: 1px solid #f39c12;
+            border: 2px solid #f39c12;
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.15);
         }
         .workshop-link:hover {
             background: #f39c12;
             color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.4);
         }
         .workshop-link i {
             color: #f39c12;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             transition: var(--transition);
         }
         .workshop-link:hover i {
@@ -660,6 +631,7 @@
             border-color: #ddd;
             cursor: not-allowed;
             justify-content: center;
+            box-shadow: none;
         }
         .workshop-link.soon:hover {
             background: #f0f2f5;
@@ -739,7 +711,6 @@
             <div class="profile-info">
                 <img src="https://statics.doctoreto.com/preset:sharp/resize:fill:300:300:0/gravity:sm/plain/s3://drto/avatar/doctor/2023/11/KNSIMdgWQx1U7vVWn6pvCZ4uQuFe0JBn5GbHTP1i.jpg" alt="احسان افشارمنش" class="profile-img" id="profile-img" width="120" height="120" decoding="async">
                 <div class="profile-text">
-                    <!-- ✅ اصلاح: h1 و instagram-followers به صورت sibling در یک wrapper قرار گرفتند -->
                     <div class="profile-name-row">
                         <h1 class="profile-name">احسان افشارمنش</h1>
                         <div class="instagram-followers">
@@ -845,8 +816,8 @@
                     <p class="box-desc">رزومه، سوابق و افتخارات</p>
                 </div>
 
-                <!-- ✅ NEW: باکس کارگاه‌ها و همایش‌ها -->
-                <div class="box workshop-box" id="workshop-toggle">
+                <!-- ✅ NEW: باکس کارگاه‌ها و همایش‌ها (مثل بقیه باکس‌ها به صفحه داخلی می‌رود) -->
+                <div class="box workshop-box" data-target="workshop-page">
                     <div class="box-icon">
                         <i class="fas fa-chalkboard-teacher"></i>
                     </div>
@@ -854,21 +825,32 @@
                     <p class="box-desc">مشاهده و دانلود همایش‌ها</p>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- ✅ NEW: پنل بازشونده لینک‌های کارگاه‌ها -->
-            <div class="workshop-panel" id="workshop-panel">
-                <div class="workshop-grid">
-                    <a href="https://drive.google.com/uc?export=download&id=11_u7kPyucx2vApG8LcraSOU0sEPgIEvS" class="workshop-link">
-                        <i class="fas fa-download"></i>
-                        <span>بخش اول همایش بافت</span>
-                    </a>
-                    <a href="https://drive.google.com/uc?export=download&id=1SCSKPg84r1HfUhF0iSSnsYA5mrdoX74a" class="workshop-link">
-                        <i class="fas fa-download"></i>
-                        <span>بخش دوم همایش بافت</span>
-                    </a>
-                    <div class="workshop-link soon">به زودی</div>
-                    <div class="workshop-link soon">به زودی</div>
-                </div>
+    <!-- ✅ NEW: صفحه کارگاه‌ها و همایش‌ها -->
+    <div class="inner-page" id="workshop-page">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+
+        <div class="container">
+            <div class="major-header">
+                <h2>کارگاه‌ها و همایش‌ها</h2>
+                <p>لیست کارگاه‌ها و همایش‌های برگزار شده</p>
+            </div>
+
+            <div class="workshop-grid">
+                <a href="#" class="workshop-link">
+                    <i class="fas fa-download"></i>
+                    <span>بخش اول همایش بافت</span>
+                </a>
+                <a href="#" class="workshop-link">
+                    <i class="fas fa-download"></i>
+                    <span>بخش دوم همایش بافت</span>
+                </a>
+                <div class="workshop-link soon">به زودی</div>
+                <div class="workshop-link soon">به زودی</div>
             </div>
         </div>
     </div>
@@ -882,7 +864,6 @@
             <h2>قبولی‌های دانشگاه</h2>
 
             <div class="boxes-grid" style="margin-top: 20px; margin-bottom: 30px;">
-                <!-- ✅ اصلاح: data-target حذف شد و pointer غیرفعال شد (قبلاً به خودش لینک بود) -->
                 <div class="box" style="cursor: default;">
                     <div class="box-icon">
                         <i class="fas fa-file-alt"></i>
@@ -955,7 +936,6 @@
         </div>
     </div>
 
-    <!-- ==================== صفحه لیست قبولی‌ها ==================== -->
     <div class="inner-page" id="accept-list-page">
         <button class="back-btn" onclick="goBack()">
             <i class="fas fa-arrow-right"></i>
@@ -967,8 +947,6 @@
                 <p>اسامی، رتبه در سهمیه و رشته‌محل قبولی</p>
             </div>
 
-            <!-- ✅ اصلاح: فقط یک div.timeline وجود دارد (قبلاً دوتا بود و تودرتو می‌شد) -->
-            <!-- ✅ اصلاح: شماره‌ها از ۱ تا ۴۲ پیوسته شدند (قبلاً ۱،۱،۴،۲،۳،۴،... بودند) -->
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-marker"><span class="timeline-number">۱</span></div>
@@ -1441,7 +1419,6 @@
     </div>
 </div>
 
-    <!-- ==================== صفحه رزومه (آشنایی بیشتر) ==================== -->
     <div class="inner-page" id="resume-page">
         <button class="back-btn" onclick="goBack()">
             <i class="fas fa-arrow-right"></i>
@@ -1695,7 +1672,6 @@
         </div>
     </div>
     
-    <!-- ==================== خدمات ویژه ۲ : مراحل انتخاب رشته ==================== -->
     <div class="inner-page" id="service2-page">
         <button class="back-btn" onclick="goBack()">
             <i class="fas fa-arrow-right"></i>
@@ -1792,7 +1768,6 @@
             </div>
         </div>
 
-        <!-- دکمه شناور پیامک -->
         <a href="sms:09131467038?body=من%20داوطلب%20انتخاب%20رشته%20هستم" class="floating-sms" aria-label="رزرو وقت انتخاب رشته">
             <i class="fas fa-sms"></i>
             <span>رزرو وقت انتخاب رشته</span>
@@ -1800,7 +1775,6 @@
     </div>
 
     <script>
-        // ===== لودینگ ۰ تا ۱۰۰ با صبر تا اتمام واقعی load =====
 document.addEventListener('DOMContentLoaded', function() {
     let progress = 0;
     let pageLoaded = false;
@@ -1811,11 +1785,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('load', () => { pageLoaded = true; });
 
-    // فالبک: اگر بعد از ۲.۵ ثانیه هنوز load نشده، اجازه بده بره ۱۰۰
     setTimeout(() => { maxWaitReached = true; }, 2500);
 
     const fakeLoaderInterval = setInterval(() => {
-        // فقط اگر pageLoaded یا maxWaitReached باشه، از ۹۵ رد شو
         if (progress >= 95 && !pageLoaded && !maxWaitReached) {
             progress = 95;
         } else {
@@ -1841,7 +1813,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 25);
 });
         
-        // شمارش فالوورها
         function startFollowerCount() {
             let count = 0;
             const followerCount = document.getElementById('follower-count');
@@ -1857,7 +1828,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 100); 
         }
         
-        // مدیریت نمایش صفحات
         document.querySelectorAll('.box').forEach(box => {
             box.addEventListener('click', function() {
                 const targetId = this.getAttribute('data-target');
@@ -1887,7 +1857,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('main-page').classList.add('active');
         }
         
-        // مدیریت اسلایدرهای لوپ (چرخشی) - RTL
         let currentSlides = {};
         
         function resetSliders() {
@@ -1925,7 +1894,6 @@ document.addEventListener('DOMContentLoaded', function() {
             slider.style.transform = `translateX(${current * 100}%)`;
         }
         
-        // انیمیشن تایم‌لاین مراحل انتخاب رشته
         const timelineObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1937,22 +1905,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelectorAll('.timeline-item').forEach(item => timelineObserver.observe(item));
         
-        // توابع برای تغییر عکس‌ها
         function changeCoverImage(url) {
             document.getElementById('cover-img').src = url;
         }
         
         function changeProfileImage(url) {
             document.getElementById('profile-img').src = url;
-        }
-
-        // ✅ NEW: باز/بسته کردن پنل کارگاه‌ها
-        const workshopToggle = document.getElementById('workshop-toggle');
-        const workshopPanel = document.getElementById('workshop-panel');
-        if (workshopToggle && workshopPanel) {
-            workshopToggle.addEventListener('click', function() {
-                workshopPanel.classList.toggle('open');
-            });
         }
     </script>
 </body>
